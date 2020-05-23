@@ -34,9 +34,3 @@ Run experiment on synthetic data and create a figure
 `python synthetic_experiment.py`
 
 This will create a pdf in the examples directory which contains the figure.
-
-
-Docs
-------
-
-Docs are available at https://hugorichard.github.io/multiviewica/generated/html/  
