@@ -25,15 +25,15 @@ Experiment
 
 Install MultiViewICA and Activate virtual environment (see Installation)
 
-Move into MultiViewICA directory
+Move into examples directory
 
-``cd multiviewica``
+``cd multiviewica/examples``
 
 Run experiment on synthetic data and create a figure
 
-`python examples/synthetic_experiment.py figures`
+`python synthetic_experiment.py`
 
-This will create a `figures` directory which contains the figure.
+This will create a pdf in the examples directory which contains the figure.
 
 
 Docs
