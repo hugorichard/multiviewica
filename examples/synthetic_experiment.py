@@ -3,9 +3,8 @@ from multiviewica.permica import permica
 from multiviewica.groupica import groupica
 from multiviewica.multiviewica import multiviewica
 import matplotlib.pyplot as plt
-from tqdm import tqdm
 
-# Make experiment
+
 def amari_d(W, A):
     P = np.dot(W, A)
 
@@ -34,10 +33,10 @@ for name, color, algo in algos:
     means = []
     lows = []
     highs = []
-    sigmas = np.logspace(-3, 1, 4)
-    for sigma in tqdm(sigmas):
+    sigmas = np.logspace(-2, 1, 6)
+    for sigma in sigmas:
         dists = []
-        for seed in range(5):
+        for seed in range(10):
             # Test that multiview is better than perm_ica
             n, p, t = 10, 3, 1000
             # Generate signals
