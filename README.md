@@ -3,6 +3,10 @@
 Install
 ---------
 
+Clone the repository
+
+`git clone https://github.com/hugorichard/multiviewica.git`
+
 Create virual environment
 
 `virtualenv -p python3 venv`
@@ -29,7 +33,7 @@ Move into examples directory
 
 ``cd multiviewica/examples``
 
-Run experiment on synthetic data and create a figure
+Run experiment on synthetic data
 
 `python synthetic_experiment.py`
 
