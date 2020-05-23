@@ -33,11 +33,11 @@ Move into examples directory
 
 ``cd multiviewica/examples``
 
-Run experiment on synthetic data and create a figure
+Run experiment on synthetic data
 
 `python synthetic_experiment.py`
 
-This will create a pdf in the examples directory which contains the figure.
+This will create a pdf `synthetic_experiment.pdf` in the examples directory which contains the figure.
 
 
 Docs
