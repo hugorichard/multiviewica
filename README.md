@@ -15,11 +15,11 @@ Activate the virtual environment
 
 `source venv/bin/activate`
 
-Move into the MultiViewICA directory
+Move into the MultiView ICA directory
 
 ``cd multiviewica``
 
-Install MultiViewICA
+Install MultiView ICA
 
 `pip install -e .`
 
@@ -27,7 +27,7 @@ Install MultiViewICA
 
 ### Synthetic experiment
 
-Install MultiViewICA (see Install)
+Install MultiView ICA (see Install)
 
 Move into the examples directory
 
