@@ -27,8 +27,6 @@ Install MultiView ICA
 
 ### Synthetic experiment
 
-Install MultiView ICA (see Install)
-
 Move into the examples directory
 
 ``cd multiviewica/examples``
@@ -68,8 +66,6 @@ These parameters are defined in `synthetic_experiment.py`.
 
 #### Download and mask Sherlock data
 
-Install MultiView ICA (see Install)
-
 Move into the data directory
 
 ``cd multiviewica/data``
@@ -82,4 +78,18 @@ Mask the data (runtime ``46m55.789s``)
 
 ``python mask_data.py``
 
+#### Reconstruction experiment
 
+Move into the examples directory
+
+``cd multiviewica/examples``
+
+Run the experiment on masked data (runtime ``76m23.689s``)
+
+``python reconstruction_experiment.py``
+
+This runs the experiment with ``n_components = 5`` and benchmark ``PCA + GroupICA`` as well as ``PermICA`` and ``MultiView ICA`` with subject specific PCA for dimension reduction.
+
+Run the plotting script
+
+``python reconstruction_experiment_plot.py``
