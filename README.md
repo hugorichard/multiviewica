@@ -25,7 +25,7 @@ Install MultiViewICA
 
 ## Experiments
 
-### Syntetic experiment
+### Synthetic experiment
 
 Install MultiViewICA and Activate virtual environment (see Install)
 
