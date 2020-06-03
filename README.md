@@ -1,7 +1,6 @@
 # MultiView ICA
 
-Install
----------
+## Install
 
 Clone the repository
 
@@ -24,10 +23,11 @@ Install MultiViewICA
 
 `pip install -e .`
 
-Experiment
------------
+## Experiments
 
-Install MultiViewICA and Activate virtual environment (see Installation)
+### Synthetic experiment
+
+Install MultiViewICA and Activate virtual environment (see Install)
 
 Move into examples directory
 
@@ -37,4 +37,29 @@ Run experiment on synthetic data
 
 `python synthetic_experiment.py`
 
-This will create a pdf in the examples directory which contains the figure.
+This will create a figure `synthetic_experiment.png`:
+
+![synthetic_experiment](./examples/synthetic_experiment.png)
+
+By default we run the experiment with
+```
+# sigmas: data noise
+sigmas = np.logspace(-2, 1, 6)
+n_seeds = 10
+# m: number of subjects
+# k: number of components
+# n: number of samples
+m, k, n = 10, 3, 1000
+```
+
+The figure in the paper is obtained with
+```
+# sigmas: data noise
+sigmas = np.logspace(-2, 1, 10)
+n_seeds = 100
+# m: number of subjects
+# k: number of components
+# n: number of samples
+m, k, n = 10, 15, 1000
+```
+These parameters are defined in `synthetic_experiment.py`.
