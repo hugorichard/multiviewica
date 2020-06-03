@@ -41,7 +41,7 @@ It runs in `4min 28s` and creates a figure `synthetic_experiment.png`:
 
 ![synthetic_experiment](./examples/synthetic_experiment.png)
 
-By default we run the experiment with
+By default the experiment is run with
 ```
 # sigmas: data noise
 sigmas = np.logspace(-2, 1, 6)
