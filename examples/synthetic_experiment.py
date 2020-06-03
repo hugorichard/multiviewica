@@ -14,21 +14,12 @@ def amari_d(W, A):
     return (s(np.abs(P)) + s(np.abs(P.T))) / (2 * P.shape[0])
 
 
-rc = {
-    "pdf.fonttype": 42,
-    "text.usetex": True,
-    "font.size": 14,
-    "xtick.labelsize": 12,
-    "ytick.labelsize": 12,
-    "text.latex.preview": True,
-}
-plt.rcParams.update(rc)
-plt.figure(figsize=(4, 2))
 algos = [
     ("MultiViewICA", "cornflowerblue", multiviewica),
     ("PermICA", "green", permica),
     ("GroupICA", "coral", groupica),
 ]
+plots = []
 for name, color, algo in algos:
     means = []
     lows = []
@@ -37,9 +28,7 @@ for name, color, algo in algos:
     for sigma in sigmas:
         dists = []
         for seed in range(10):
-            # Test that multiview is better than perm_ica
             n, p, t = 10, 3, 1000
-            # Generate signals
             rng = np.random.RandomState(None)
             S_true = rng.laplace(size=(p, t))
             A_list = rng.randn(n, p, p)
@@ -56,18 +45,34 @@ for name, color, algo in algos:
         means.append(mean)
         lows.append(low)
         highs.append(high)
+    lows = np.array(lows)
+    highs = np.array(highs)
+    means = np.array(means)
+    plots.append((highs, lows, means))
+
+rc = {
+    "pdf.fonttype": 42,
+    "text.usetex": True,
+    "font.size": 14,
+    "xtick.labelsize": 12,
+    "ytick.labelsize": 12,
+    "text.latex.preview": True,
+}
+plt.rcParams.update(rc)
+plt.figure(figsize=(4, 2))
+for i, (name, color, algo) in enumerate(algos):
+    highs, lows, means = plots[i]
     plt.fill_between(
-        sigmas, np.array(lows), np.array(highs), color=color, alpha=0.3,
+        sigmas, lows, highs, color=color, alpha=0.3,
     )
     plt.loglog(
         sigmas, means, label=name, color=color,
     )
-
 plt.legend()
 x_ = plt.xlabel(r"Data noise")
 y_ = plt.ylabel(r"Amari distance")
 plt.savefig(
-    "synthetic_experiment.pdf",
+    "synthetic_experiment.png",
     bbox_extra_artists=[x_, y_],
     bbox_inches="tight",
 )
