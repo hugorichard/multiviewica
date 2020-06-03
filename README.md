@@ -38,4 +38,5 @@ Run experiment on synthetic data
 `python synthetic_experiment.py`
 
 This will create a figure `synthetic_experiment.png`:
+
 ![synthetic_experiment](./examples/synthetic_experiment.png)
