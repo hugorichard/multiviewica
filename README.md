@@ -6,16 +6,16 @@ Clone the repository
 
 `git clone https://github.com/hugorichard/multiviewica.git`
 
-Create virual environment
+Create a virual environment
 
 `virtualenv -p python3 venv`
 
 
-Activate virtual environment
+Activate the virtual environment
 
 `source venv/bin/activate`
 
-Move into MultiViewICA directory
+Move into the MultiViewICA directory
 
 ``cd multiviewica``
 
@@ -27,17 +27,17 @@ Install MultiViewICA
 
 ### Synthetic experiment
 
-Install MultiViewICA and Activate virtual environment (see Install)
+Install MultiViewICA (see Install)
 
-Move into examples directory
+Move into the examples directory
 
 ``cd multiviewica/examples``
 
-Run experiment on synthetic data
+Run the experiment on synthetic data
 
 `python synthetic_experiment.py`
 
-This will create a figure `synthetic_experiment.png`:
+It runs in `4min 28s` and creates a figure `synthetic_experiment.png`:
 
 ![synthetic_experiment](./examples/synthetic_experiment.png)
 
