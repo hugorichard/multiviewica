@@ -40,3 +40,24 @@ Run experiment on synthetic data
 This will create a figure `synthetic_experiment.png`:
 
 ![synthetic_experiment](./examples/synthetic_experiment.png)
+
+By default we run the experiment with
+```
+sigmas = np.logspace(-2, 1, 6)
+n_seeds = 10
+# m: number of subjects
+# k: number of components
+# n: number of samples
+m, k, n = 10, 3, 1000
+```
+
+The figure in the paper is obtained with
+```
+sigmas = np.logspace(-2, 1, 10)
+n_seeds = 100
+# m: number of subjects
+# k: number of components
+# n: number of samples
+m, k, n = 10, 15, 1000
+```
+These parameters are defined in `synthetic_experiment.py`.
