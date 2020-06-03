@@ -1,7 +1,6 @@
 # MultiView ICA
 
-Install
----------
+## Install
 
 Clone the repository
 
@@ -24,10 +23,11 @@ Install MultiViewICA
 
 `pip install -e .`
 
-Experiment
------------
+## Experiments
 
-Install MultiViewICA and Activate virtual environment (see Installation)
+### Syntetic experiment
+
+Install MultiViewICA and Activate virtual environment (see Install)
 
 Move into examples directory
 
@@ -37,4 +37,5 @@ Run experiment on synthetic data
 
 `python synthetic_experiment.py`
 
-This will create a pdf in the examples directory which contains the figure.
+This will create a figure `synthetic_experiment.png`:
+![synthetic_experiment](./examples/synthetic_experiment.png)
