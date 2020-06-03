@@ -58,7 +58,7 @@ The figure in the paper is obtained with
 # n: number of samples
 sigmas = np.logspace(-2, 1, 6)
 n_seeds = 10
-m, k, n = 10, 3, 1000
+m, k, n = 10, 15, 1000
 ```
 These parameters are defined in `synthetic_experiment.py`.
 
