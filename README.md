@@ -43,6 +43,7 @@ This will create a figure `synthetic_experiment.png`:
 
 By default we run the experiment with
 ```
+# sigmas: data noise
 sigmas = np.logspace(-2, 1, 6)
 n_seeds = 10
 # m: number of subjects
@@ -53,6 +54,7 @@ m, k, n = 10, 3, 1000
 
 The figure in the paper is obtained with
 ```
+# sigmas: data noise
 sigmas = np.logspace(-2, 1, 10)
 n_seeds = 100
 # m: number of subjects
