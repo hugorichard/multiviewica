@@ -19,24 +19,29 @@ algos = [
     ("PermICA", "green", permica),
     ("GroupICA", "coral", groupica),
 ]
+# sigmas: data noise
+sigmas = np.logspace(-2, 1, 6)
+n_seeds = 10
+# m: number of subjects
+# k: number of components
+# n: number of samples
+m, k, n = 10, 3, 1000
 plots = []
 for name, color, algo in algos:
     means = []
     lows = []
     highs = []
-    sigmas = np.logspace(-2, 1, 6)
     for sigma in sigmas:
         dists = []
-        for seed in range(10):
-            n, p, t = 10, 3, 1000
+        for seed in range(n_seeds):
             rng = np.random.RandomState(None)
-            S_true = rng.laplace(size=(p, t))
-            A_list = rng.randn(n, p, p)
-            noises = rng.randn(n, p, t)
+            S_true = rng.laplace(size=(k, n))
+            A_list = rng.randn(m, k, k)
+            noises = rng.randn(m, k, n)
             X = np.array([A.dot(S_true) for A in A_list])
             X += [sigma * A.dot(N) for A, N in zip(A_list, noises)]
             W, S = algo(X, tol=1e-4, max_iter=10000)
-            dist = np.mean([amari_d(W[i], A_list[i]) for i in range(n)])
+            dist = np.mean([amari_d(W[i], A_list[i]) for i in range(m)])
             dists.append(dist)
         dists = np.array(dists)
         mean = np.mean(dists)
