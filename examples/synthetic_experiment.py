@@ -5,6 +5,22 @@ from multiviewica.multiviewica import multiviewica
 import matplotlib.pyplot as plt
 
 
+# sigmas: data noise
+# m: number of subjects
+# k: number of components
+# n: number of samples
+sigmas = np.logspace(-2, 1, 6)
+n_seeds = 10
+m, k, n = 10, 3, 1000
+
+cm = plt.cm.tab20
+algos = [
+    ("MultiViewICA", cm(0), multiviewica),
+    ("PermICA", cm(2), permica),
+    ("GroupICA", cm(6), groupica),
+]
+
+
 def amari_d(W, A):
     P = np.dot(W, A)
 
@@ -14,18 +30,6 @@ def amari_d(W, A):
     return (s(np.abs(P)) + s(np.abs(P.T))) / (2 * P.shape[0])
 
 
-algos = [
-    ("MultiViewICA", "cornflowerblue", multiviewica),
-    ("PermICA", "green", permica),
-    ("GroupICA", "coral", groupica),
-]
-# sigmas: data noise
-# m: number of subjects
-# k: number of components
-# n: number of samples
-sigmas = np.logspace(-2, 1, 6)
-n_seeds = 10
-m, k, n = 10, 3, 1000
 plots = []
 for name, color, algo in algos:
     means = []
@@ -34,7 +38,7 @@ for name, color, algo in algos:
     for sigma in sigmas:
         dists = []
         for seed in range(n_seeds):
-            rng = np.random.RandomState(None)
+            rng = np.random.RandomState(seed)
             S_true = rng.laplace(size=(k, n))
             A_list = rng.randn(m, k, k)
             noises = rng.randn(m, k, n)
