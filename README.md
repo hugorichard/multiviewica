@@ -84,7 +84,7 @@ Move into the examples directory
 
 ``cd multiviewica/examples``
 
-Run the experiment on masked data (runtime ``76m23.689s``)
+Run the experiment on masked data (runtime ``13m7.299s``)
 
 ``python reconstruction_experiment.py``
 
