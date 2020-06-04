@@ -74,7 +74,7 @@ Launch the download script (runtime ``34m6.751s``)
 
 `` bash download_data.sh ``
 
-Mask the data (runtime ``46m55.789s``)
+Mask the data (runtime ``15m27.104s``)
 
 ``python mask_data.py``
 
