@@ -86,7 +86,7 @@ Run the experiment on masked data (Runtime ``15m6.653s``)
 
 ``python reconstruction_experiment.py``
 
-![reconstruction_experiment](./examples/reconstruction_experiment.png)
+![reconstruction_experiment](./examples/reconstruction.png)
 
 This runs the experiment with ``n_components = 5`` and benchmark ``PCA + GroupICA`` as well as ``PermICA`` and ``MultiView ICA`` with subject specific PCA for dimension reduction.
 
