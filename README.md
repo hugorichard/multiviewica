@@ -102,4 +102,6 @@ Run the experiment on masked data (Runtime ``4m55.119s``)
 
 ``python timesegment_matching.py``
 
+![timesegment_matching](./examples/timesegment_matching.png)
+
 This runs the experiment with ``n_components = 5`` and benchmark ``PCA + GroupICA`` as well as ``PermICA`` and ``MultiView ICA`` using subject specific PCA for dimension reduction.
