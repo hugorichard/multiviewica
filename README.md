@@ -31,11 +31,9 @@ Move into the examples directory
 
 ``cd multiviewica/examples``
 
-Run the experiment on synthetic data
+Run the experiment on synthetic data (Runtime ``4min 28s``)
 
 `python synthetic_experiment.py`
-
-It runs in `4min 28s` and creates a figure `synthetic_experiment.png`:
 
 ![synthetic_experiment](./examples/synthetic_experiment.png)
 
@@ -70,21 +68,21 @@ Move into the data directory
 
 ``cd multiviewica/data``
 
-Launch the download script (runtime ``34m6.751s``)
+Launch the download script (Runtime ``34m6.751s``)
 
 `` bash download_data.sh ``
 
-Mask the data (runtime ``15m27.104s``)
+Mask the data (Runtime ``15m27.104s``)
 
 ``python mask_data.py``
 
-#### Reconstruction experiment
+#### Reconstructing BOLD signal of missing subjects
 
 Move into the examples directory
 
 ``cd multiviewica/examples``
 
-Run the experiment on masked data (runtime ``15m6.653s``)
+Run the experiment on masked data (Runtime ``15m6.653s``)
 
 ``python reconstruction_experiment.py``
 
@@ -93,3 +91,15 @@ This runs the experiment with ``n_components = 5`` and benchmark ``PCA + GroupIC
 Run the plotting script
 
 ``python reconstruction_experiment_plot.py``
+
+#### Timesegment matching
+
+Move into the examples directory
+
+``cd multiviewica/examples``
+
+Run the experiment on masked data (Runtime ``4m55.119s``)
+
+``python timesegment_matching.py``
+
+This runs the experiment with ``n_components = 5`` and benchmark ``PCA + GroupICA`` as well as ``PermICA`` and ``MultiView ICA`` using subject specific PCA for dimension reduction.
