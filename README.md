@@ -90,10 +90,6 @@ Run the experiment on masked data (Runtime ``15m6.653s``)
 
 This runs the experiment with ``n_components = 5`` and benchmark ``PCA + GroupICA`` as well as ``PermICA`` and ``MultiView ICA`` with subject specific PCA for dimension reduction.
 
-Run the plotting script
-
-``python reconstruction_experiment_plot.py``
-
 #### Timesegment matching
 
 Move into the examples directory
