@@ -11,3 +11,5 @@ build
 *.pyproj
 .pydevproject
 .idea
+
+multiviewica.egg-info/
