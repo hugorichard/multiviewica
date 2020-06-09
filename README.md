@@ -63,7 +63,7 @@ Run the experiment on masked data (Runtime ``15m6.653s``)
 
 ``python reconstruction_experiment.py``
 
-![reconstruction_experiment](./examples/reconstruction.png)
+![reconstruction_experiment](./figures/reconstruction.png)
 
 This runs the experiment with ``n_components = 5`` and benchmark ``PCA + GroupICA`` as well as ``PermICA`` and ``MultiView ICA`` with subject specific PCA for dimension reduction.
 
@@ -77,6 +77,6 @@ Run the experiment on masked data (Runtime ``4m55.119s``)
 
 ``python timesegment_matching.py``
 
-![timesegment_matching](./examples/timesegment_matching.png)
+![timesegment_matching](./figures/timesegment_matching.png)
 
 This runs the experiment with ``n_components = 5`` and benchmark ``PCA + GroupICA`` as well as ``PermICA`` and ``MultiView ICA`` using subject specific PCA for dimension reduction.
