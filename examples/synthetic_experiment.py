@@ -1,7 +1,5 @@
 import numpy as np
-from multiviewica.permica import permica
-from multiviewica.groupica import groupica
-from multiviewica.multiviewica import multiviewica
+from multiviewica import permica, groupica, multiviewica
 import matplotlib.pyplot as plt
 
 
