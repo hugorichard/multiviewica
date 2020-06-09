@@ -6,7 +6,7 @@ from multiviewica.groupica import groupica
 
 
 def multiviewica(X, noise=1.0, max_iter=1000, init='permica',
-                 random_state=None, tol=1e-7):
+                 random_state=None, tol=1e-3, verbose=False):
     """
     Performs MultiViewICA.
     It optimizes:
@@ -40,6 +40,8 @@ def multiviewica(X, noise=1.0, max_iter=1000, init='permica',
     tol : float, optional
         A positive scalar giving the tolerance at which
         the un-mixing matrices are considered to have converged.
+    verbose : bool, optional
+        Print informations
 
     Returns
     -------
@@ -64,7 +66,7 @@ def multiviewica(X, noise=1.0, max_iter=1000, init='permica',
         W = init
     # Performs multiview ica
     W, S = _multiview_ica_main(
-        X, noise=noise, n_iter=max_iter, tol=tol, init=W,
+        X, noise=noise, n_iter=max_iter, tol=tol, init=W, verbose=verbose
     )
     return W, S
 
