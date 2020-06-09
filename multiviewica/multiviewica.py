@@ -2,9 +2,11 @@ import numpy as np
 import warnings
 from scipy.linalg import expm
 from multiviewica.permica import permica
+from multiviewica.groupica import groupica
 
 
-def multiviewica(X, noise=1.0, max_iter=1000, random_state=None, tol=1e-7):
+def multiviewica(X, noise=1.0, max_iter=1000, init='permica', random_state=None,
+                 tol=1e-7):
     """
     Performs MultiViewICA.
     It optimizes:
@@ -26,6 +28,9 @@ def multiviewica(X, noise=1.0, max_iter=1000, random_state=None, tol=1e-7):
         Gaussian noise level
     max_iter : int, optional
         Maximum number of iterations to perform
+    init : str or np array of shape (n_groups, n_components, n_components)
+        If permica: initialize with perm ICA, if groupica, initialize with
+        group ica. Else, use the provided array to initialize.
     random_state : int, RandomState instance or None, optional (default=None)
         Used to perform a random initialization. If int, random_state is
         the seed used by the random number generator; If RandomState
@@ -44,7 +49,19 @@ def multiviewica(X, noise=1.0, max_iter=1000, random_state=None, tol=1e-7):
         Estimated source
     """
     # Initialization
-    W, S = permica(X, max_iter=max_iter, random_state=random_state, tol=tol)
+    if type(init) is str:
+        if init not in ['permica', 'groupica']:
+            raise ValueError('init should either be permica or groupica')
+        if init == 'permica':
+            W, S = permica(X, max_iter=max_iter, random_state=random_state,
+                           tol=tol)
+        else:
+            W, S = groupica(X, max_iter=max_iter, random_state=random_state,
+                            tol=tol)
+    else:
+        if type(init) is not np.ndarray:
+            raise TypeError('init should be a numpy array')
+        W = init.copy()
     # Performs multiview ica
     W, S = _multiview_ica_main(
         X, noise=noise, n_iter=max_iter, tol=tol, init=W,

@@ -13,3 +13,4 @@ build
 .idea
 
 multiviewica.egg-info/
+.pytest_cache/

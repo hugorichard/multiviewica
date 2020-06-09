@@ -52,4 +52,4 @@ def groupica(X, max_iter=1000, random_state=None, tol=1e-7):
     scale = np.linalg.norm(S, axis=1)
     S = S / scale[:, None]
     W = np.dot(W, K) / scale[:, None]
-    return [W.dot(np.linalg.inv(u)) for u in U], S
+    return np.array([W.dot(np.linalg.inv(u)) for u in U]), S

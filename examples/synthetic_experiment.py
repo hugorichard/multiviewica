@@ -59,15 +59,6 @@ for name, color, algo in algos:
     means = np.array(means)
     plots.append((highs, lows, means))
 
-rc = {
-    "pdf.fonttype": 42,
-    "text.usetex": True,
-    "font.size": 14,
-    "xtick.labelsize": 12,
-    "ytick.labelsize": 12,
-    "text.latex.preview": True,
-}
-plt.rcParams.update(rc)
 plt.figure(figsize=(4, 2))
 for i, (name, color, algo) in enumerate(algos):
     highs, lows, means = plots[i]
