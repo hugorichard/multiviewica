@@ -40,11 +40,11 @@ for seed in range(n_seeds):
     shuffled_subs = np.arange(n_subjects)
     rng.shuffle(shuffled_subs)
     train_subs = shuffled_subs[: int(0.8 * n_subjects)]
-    test_subs = shuffled_subs[int(0.8 * n_subjects) :]
+    test_subs = shuffled_subs[int(0.8 * n_subjects):]
     shuffled_runs = np.arange(n_runs)
     rng.shuffle(shuffled_runs)
     train_runs = shuffled_runs[: int(0.8 * n_runs)]
-    test_runs = shuffled_runs[int(0.8 * n_runs) :]
+    test_runs = shuffled_runs[int(0.8 * n_runs):]
 
     train_paths = paths[np.arange(n_subjects), :][:, train_runs]
     test_paths = paths[train_subs, :][:, test_runs]
@@ -87,16 +87,6 @@ for seed in range(n_seeds):
 
 # Plotting
 cm = plt.cm.tab20
-
-rc = {
-    "pdf.fonttype": 42,
-    "text.usetex": True,
-    "font.size": 14,
-    "xtick.labelsize": 12,
-    "ytick.labelsize": 12,
-    "text.latex.preview": True,
-}
-plt.rcParams.update(rc)
 
 algos = [
     ("MultiViewICA", cm(0)),

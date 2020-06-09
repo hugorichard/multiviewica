@@ -6,7 +6,7 @@ from multiviewica.groupica import groupica
 
 
 def multiviewica(X, noise=1.0, max_iter=1000, init='permica',
-                 random_state=None, tol=1e-7):
+                 random_state=None, tol=1e-3, verbose=False):
     """
     Performs MultiViewICA.
     It optimizes:
@@ -40,6 +40,8 @@ def multiviewica(X, noise=1.0, max_iter=1000, init='permica',
     tol : float, optional
         A positive scalar giving the tolerance at which
         the un-mixing matrices are considered to have converged.
+    verbose : bool, optional
+        Print informations
 
     Returns
     -------
@@ -61,10 +63,10 @@ def multiviewica(X, noise=1.0, max_iter=1000, init='permica',
     else:
         if type(init) is not np.ndarray:
             raise TypeError('init should be a numpy array')
-        W = init.copy()
+        W = init
     # Performs multiview ica
     W, S = _multiview_ica_main(
-        X, noise=noise, n_iter=max_iter, tol=tol, init=W,
+        X, noise=noise, n_iter=max_iter, tol=tol, init=W, verbose=verbose
     )
     return W, S
 
@@ -90,19 +92,7 @@ def _multiview_ica_main(
 
     # Init
     n_pb, p, n = X_list.shape
-    if init is None:
-        basis_list = np.zeros((n_pb, p, p))
-        # Start from a decorrelating transform (PCA)
-        u, d, _ = np.linalg.svd(np.vstack(X_list), full_matrices=False)
-        del _
-        K = (u[:, :p] / d[:p]).T
-        del u, d
-        K *= np.sqrt(p)
-        K = K.reshape(p, n_pb, p)
-        for i in range(n_pb):
-            basis_list[i] = K[:, i, :]
-    else:
-        basis_list = init.copy()
+    basis_list = init.copy()
     Y_avg = np.mean([np.dot(W, X) for W, X in zip(basis_list, X_list)], axis=0)
     # Start scaling
     g_norms = 0

@@ -62,16 +62,6 @@ for i, (train_runs, test_runs) in enumerate(cv.split(np.arange(n_runs))):
 # Plotting
 cm = plt.cm.tab20
 
-rc = {
-    "pdf.fonttype": 42,
-    "text.usetex": True,
-    "font.size": 14,
-    "xtick.labelsize": 12,
-    "ytick.labelsize": 12,
-    "text.latex.preview": True,
-}
-plt.rcParams.update(rc)
-
 algos = [
     ("MultiViewICA", cm(0)),
     ("PCA+GroupICA", cm(7)),

@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 # k: number of components
 # n: number of samples
 sigmas = np.logspace(-2, 1, 6)
-n_seeds = 10
-m, k, n = 10, 3, 1000
+n_seeds = 3
+m, k, n = 5, 3, 1000
 
 cm = plt.cm.tab20
 algos = [
