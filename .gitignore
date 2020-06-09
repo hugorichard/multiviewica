@@ -14,4 +14,3 @@ build
 
 multiviewica.egg-info/
 .pytest_cache/
-*.png

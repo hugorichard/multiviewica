@@ -6,59 +6,36 @@ Clone the repository
 
 `git clone https://github.com/hugorichard/multiviewica.git`
 
-Create a virual environment
-
-`virtualenv -p python3 venv`
-
-
-Activate the virtual environment
-
-`source venv/bin/activate`
-
-Move into the MultiView ICA directory
-
-``cd multiviewica``
-
 Install MultiView ICA
 
 `pip install -e .`
 
+
+## Requirements
+
+* numpy >= 1.16
+* scipy >= 1.12
+* python-picard >= 0.4 (``pip install python-picard``)
 ## Experiments
 
 ### Synthetic experiment
 
-Move into the examples directory
+Run the experiment on synthetic data
 
-``cd multiviewica/examples``
+`python examples/synthetic_experiment.py`
 
-Run the experiment on synthetic data (Runtime ``4min 28s``)
+![synthetic_experiment](./figures/synthetic_experiment.png)
 
-`python synthetic_experiment.py`
-
-![synthetic_experiment](./examples/synthetic_experiment.png)
-
-By default the experiment is run with
+In order to reproduce the figure in the paper, use (might take a long time):
 ```
 # sigmas: data noise
 # m: number of subjects
 # k: number of components
 # n: number of samples
-sigmas = np.logspace(-2, 1, 6)
-n_seeds = 10
-m, k, n = 10, 3, 1000
-```
-
-The figure in the paper is obtained with
-```
-# sigmas: data noise
-# m: number of subjects
-# k: number of components
-# n: number of samples
-sigmas = np.logspace(-2, 1, 6)
+sigmas = np.logspace(-2, 1, 21)
 n_seeds = 100
 m, k, n = 10, 15, 1000
 ```
-These parameters are defined in `synthetic_experiment.py`.
 
 ### Experiments on fMRI data
 
@@ -86,7 +63,7 @@ Run the experiment on masked data (Runtime ``15m6.653s``)
 
 ``python reconstruction_experiment.py``
 
-![reconstruction_experiment](./examples/reconstruction.png)
+![reconstruction_experiment](./figures/reconstruction.png)
 
 This runs the experiment with ``n_components = 5`` and benchmark ``PCA + GroupICA`` as well as ``PermICA`` and ``MultiView ICA`` with subject specific PCA for dimension reduction.
 
@@ -100,6 +77,6 @@ Run the experiment on masked data (Runtime ``4m55.119s``)
 
 ``python timesegment_matching.py``
 
-![timesegment_matching](./examples/timesegment_matching.png)
+![timesegment_matching](./figures/timesegment_matching.png)
 
 This runs the experiment with ``n_components = 5`` and benchmark ``PCA + GroupICA`` as well as ``PermICA`` and ``MultiView ICA`` using subject specific PCA for dimension reduction.
