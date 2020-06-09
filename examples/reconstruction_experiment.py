@@ -4,10 +4,9 @@ import os
 
 from multiviewica.permica import permica
 from multiviewica.groupica import groupica
-from multiviewica.multiviewica import multiviewica
+from multiviewica import multiviewica
 from multiviewica.reduce_data import reduce_data, load_and_concat, online_dot
 from reconstruction_utils import get_sherlock_roi
-import joblib
 import matplotlib.pyplot as plt
 from plot_utils import confidence_interval
 
