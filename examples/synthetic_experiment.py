@@ -70,7 +70,7 @@ plt.legend()
 x_ = plt.xlabel(r"Data noise")
 y_ = plt.ylabel(r"Amari distance")
 plt.savefig(
-    "synthetic_experiment.png",
+    "figures/synthetic_experiment.png",
     bbox_extra_artists=[x_, y_],
     bbox_inches="tight",
 )
