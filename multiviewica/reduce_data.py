@@ -84,7 +84,13 @@ def srm(paths, n_components):
     Reduce data using FastSRM
     """
     srm = IdentifiableFastSRM(
-        n_components=n_components, tol=1e-10, verbose=True
+        n_components=n_components,
+        tol=1e-10,
+        verbose=True,
+        aggregate=None,
+        identifiability="decorr",
     )
     S = srm.fit_transform(paths)
-    return np.array(srm.basis_list), S
+    S = np.array([np.concatenate(s, axis=1) for s in S])
+    W = np.array([w.T for w in srm.basis_list])
+    return W, S
