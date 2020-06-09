@@ -5,8 +5,8 @@ from multiviewica.permica import permica
 from multiviewica.groupica import groupica
 
 
-def multiviewica(X, noise=1.0, max_iter=1000, init='permica', random_state=None,
-                 tol=1e-7):
+def multiviewica(X, noise=1.0, max_iter=1000, init='permica',
+                 random_state=None, tol=1e-7):
     """
     Performs MultiViewICA.
     It optimizes:
