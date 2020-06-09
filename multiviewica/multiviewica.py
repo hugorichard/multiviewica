@@ -155,7 +155,7 @@ def _multiview_ica_main(
 
     else:
         warnings.warn(
-            "Rosetta has not converged - gradient norm: %e " % g_norms
+            "Multiview ICA has not converged - gradient norm: %e " % g_norms
         )
     if return_gradients:
         return basis_list, Y_avg, g_list
