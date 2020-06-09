@@ -12,12 +12,16 @@ Install MultiView ICA
 
 
 ## Requirements
-
+For the core algorithms:
 * numpy >= 1.16
 * scipy >= 1.12
 * scikit-learn >= 0.20
-*
 * python-picard >= 0.4 (``pip install python-picard``)
+
+For the Experiments:
+* nibabel (>=2.3.3)
+* mne (>=0.20)
+* nilearn (>=0.5)
 ## Experiments
 
 ### Synthetic experiment
