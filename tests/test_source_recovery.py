@@ -1,8 +1,6 @@
 import pytest
 import numpy as np
-from multiviewica.permica import _hungarian, permica
-from multiviewica.groupica import groupica
-from multiviewica.multiviewica import multiviewica
+from multiviewica import _hungarian, permica, groupica, multiviewica
 
 
 def normalize(A):
