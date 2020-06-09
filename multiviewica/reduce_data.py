@@ -1,5 +1,6 @@
 import numpy as np
 from sklearn.utils.extmath import randomized_svd
+from fastsrm.identifiable_srm import IdentifiableFastSRM
 
 
 def online_dot(paths, A):
@@ -76,3 +77,14 @@ def reduce_data(paths, n_components):
         reduced.append(np.diag(S_i).dot(V_i))
         basis.append(U_i)
     return np.array(basis), np.array(reduced)
+
+
+def srm(paths, n_components):
+    """
+    Reduce data using FastSRM
+    """
+    srm = IdentifiableFastSRM(
+        n_components=n_components, tol=1e-10, verbose=True
+    )
+    S = srm.fit_transform(paths)
+    return np.array(srm.basis_list), S
