@@ -15,6 +15,8 @@ Install MultiView ICA
 
 * numpy >= 1.16
 * scipy >= 1.12
+* scikit-learn >= 0.20
+*
 * python-picard >= 0.4 (``pip install python-picard``)
 ## Experiments
 
@@ -65,7 +67,7 @@ Run the experiment on masked data (Runtime ``15m6.653s``)
 
 ![reconstruction_experiment](./figures/reconstruction.png)
 
-This runs the experiment with ``n_components = 5`` and benchmark ``PCA + GroupICA`` as well as ``PermICA`` and ``MultiView ICA`` with subject specific PCA for dimension reduction.
+This runs the experiment with ``n_components = 5`` and benchmark ``PCA + GroupICA``,  ``PermICA`` and ``MultiView ICA`` with subject specific PCA for dimension reduction.
 
 #### Timesegment matching
 
@@ -79,4 +81,4 @@ Run the experiment on masked data (Runtime ``4m55.119s``)
 
 ![timesegment_matching](./figures/timesegment_matching.png)
 
-This runs the experiment with ``n_components = 5`` and benchmark ``PCA + GroupICA`` as well as ``PermICA`` and ``MultiView ICA`` using subject specific PCA for dimension reduction.
+This runs the experiment with ``n_components = 5`` and benchmark ``PCA + GroupICA``, ``PermICA`` and ``MultiView ICA`` using subject specific PCA for dimension reduction.
