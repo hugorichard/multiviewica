@@ -86,7 +86,6 @@ def srm(paths, n_components):
     srm = IdentifiableFastSRM(
         n_components=n_components,
         tol=1e-10,
-        verbose=True,
         aggregate=None,
         identifiability="decorr",
     )

@@ -5,13 +5,18 @@ import os
 from multiviewica.permica import permica
 from multiviewica.groupica import groupica
 from multiviewica import multiviewica
-from multiviewica.reduce_data import reduce_data, load_and_concat, online_dot
+from multiviewica.reduce_data import (
+    reduce_data,
+    load_and_concat,
+    online_dot,
+    srm,
+)
 from reconstruction_utils import get_sherlock_roi
 import matplotlib.pyplot as plt
 from plot_utils import confidence_interval
 
 n_components = 5
-n_seeds = 25
+n_seeds = 10
 
 n_subjects = 17
 n_runs = 5
@@ -45,28 +50,28 @@ for seed in range(n_seeds):
     rng.shuffle(shuffled_runs)
     train_runs = shuffled_runs[: int(0.8 * n_runs)]
     test_runs = shuffled_runs[int(0.8 * n_runs):]
-
     train_paths = paths[np.arange(n_subjects), :][:, train_runs]
     test_paths = paths[train_subs, :][:, test_runs]
     validation_paths = paths[test_subs, :][:, test_runs]
-
-    A, X_train = reduce_data(train_paths, n_components=n_components)
     data_test = load_and_concat(test_paths)
     data_val = load_and_concat(validation_paths)
-
     res_ = []
     for name, algo in algos:
-        W, S = algo(X_train, tol=1e-4, max_iter=10000)
-
-        # With PCA+GroupICA we use double regression to compute forward
-        if name == "PCA+GroupICA":
-            backward = online_dot(train_paths, np.linalg.pinv(S))
-            forward = [np.linalg.pinv(b) for b in backward]
-        else:
+        if name == "PermICA" or name == "MultiViewICA":
+            # With PermICA and MultiViewICA we use SRM as preprocessing
+            A, X_train = srm(train_paths, n_components=n_components)
+            W, S = algo(X_train, tol=1e-5, max_iter=10000)
             forward = [W[i].dot(A[i].T) for i in range(n_subjects)]
             backward = [
                 A[i].dot(np.linalg.inv(W[i])) for i in range(n_subjects)
             ]
+        elif name == "PCA+GroupICA":
+            # With PCA+GroupICA we use subject specific PCA
+            A, X_train = reduce_data(train_paths, n_components=n_components)
+            W, S = algo(X_train, tol=1e-5, max_iter=10000)
+            # We use double regression to compute forward operator
+            backward = online_dot(train_paths, np.linalg.pinv(S))
+            forward = [np.linalg.pinv(b) for b in backward]
 
         shared_test = np.mean(
             [forward[i].dot(data_test[k]) for k, i in enumerate(train_subs)],
