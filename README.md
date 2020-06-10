@@ -22,6 +22,8 @@ For the Experiments:
 * nibabel (>=2.3.3)
 * mne (>=0.20)
 * nilearn (>=0.5)
+* fastsrm (``pip install fastsrm``)
+
 ## Experiments
 
 ### Synthetic experiment
