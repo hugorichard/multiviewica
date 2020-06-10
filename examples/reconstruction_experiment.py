@@ -121,5 +121,5 @@ fig.legend(
     ncol=3, loc="upper center",
 )
 plt.savefig(
-    "reconstruction.png", bbox_inches="tight",
+    "../figures/reconstruction.png", bbox_inches="tight",
 )

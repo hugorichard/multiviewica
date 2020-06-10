@@ -103,5 +103,5 @@ fig.legend(
     ncol=3, loc="upper center",
 )
 plt.savefig(
-    "timesegment_matching.png", bbox_inches="tight",
+    "../figures/timesegment_matching.png", bbox_inches="tight",
 )
