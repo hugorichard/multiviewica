@@ -67,13 +67,13 @@ Move into the examples directory
 
 ``cd multiviewica/examples``
 
-Run the experiment on masked data (Runtime ``15m6.653s``)
+Run the experiment on masked data (Runtime ``30m55.347s``)
 
 ``python reconstruction_experiment.py``
 
 ![reconstruction_experiment](./figures/reconstruction.png)
 
-This runs the experiment with ``n_components = 5`` and benchmark ``PCA + GroupICA``,  ``PermICA`` and ``MultiView ICA`` with subject specific PCA for dimension reduction.
+This runs the experiment with ``n_components = 5`` and benchmark ``PCA + GroupICA``,  ``PermICA`` and ``MultiView ICA`` with subject specific PCA for dimension reduction in ``PCA + GroupICA`` and SRM for ``PermICA`` and ``MultiView ICA``.
 
 #### Timesegment matching
 
@@ -81,10 +81,10 @@ Move into the examples directory
 
 ``cd multiviewica/examples``
 
-Run the experiment on masked data (Runtime ``4m55.119s``)
+Run the experiment on masked data (Runtime ``17m39.520s``)
 
 ``python timesegment_matching.py``
 
 ![timesegment_matching](./figures/timesegment_matching.png)
 
-This runs the experiment with ``n_components = 5`` and benchmark ``PCA + GroupICA``, ``PermICA`` and ``MultiView ICA`` using subject specific PCA for dimension reduction.
+This runs the experiment with ``n_components = 5`` and benchmark ``PCA + GroupICA``,  ``PermICA`` and ``MultiView ICA`` with subject specific PCA for dimension reduction in ``PCA + GroupICA`` and SRM for ``PermICA`` and ``MultiView ICA``.
