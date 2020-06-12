@@ -23,22 +23,45 @@ def error(M):
     return 1 - M[np.arange(M.shape[0]), order]
 
 
-@pytest.mark.parametrize("algo", [permica, groupica, multiviewica])
-def test_multiview(algo):
+@pytest.mark.parametrize(
+    ("algo, init"),
+    [
+        (permica, None),
+        (groupica, None),
+        (multiviewica, "permica"),
+        (multiviewica, "groupica"),
+    ],
+)
+@pytest.mark.parametrize("dimension_reduction", ["pca", "srm"])
+def test_ica(algo, dimension_reduction, init):
+    # Test that all algo can recover the sources
     sigma = 1e-4
-    # Test that multiview is better than perm_ica
-    n, p, t = 3, 5, 1000
+    n, v, p, t = 3, 10, 5, 1000
     # Generate signals
     rng = np.random.RandomState(None)
     S_true = rng.laplace(size=(p, t))
     S_true = normalize(S_true)
-    A_list = rng.randn(n, p, p)
-    noises = rng.randn(n, p, t)
+    A_list = rng.randn(n, v, p)
+    noises = rng.randn(n, v, t)
     X = np.array([A.dot(S_true) for A in A_list])
     X += [sigma * N for A, N in zip(A_list, noises)]
     # Run ICA
-    W, S = algo(X, tol=1e-5)
-    dist = np.mean([amari_d(W[i], A_list[i]) for i in range(n)])
+    if init is None:
+        K, W, S = algo(
+            X,
+            n_components=5,
+            dimension_reduction=dimension_reduction,
+            tol=1e-5,
+        )
+    else:
+        K, W, S = algo(
+            X,
+            n_components=5,
+            dimension_reduction=dimension_reduction,
+            tol=1e-5,
+            init=init,
+        )
+    dist = np.mean([amari_d(W[i].dot(K[i]), A_list[i]) for i in range(n)])
     S = normalize(S)
     err = np.mean(error(np.abs(S.dot(S_true.T))))
     assert dist < 0.01

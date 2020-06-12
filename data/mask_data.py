@@ -7,7 +7,7 @@ from nilearn.input_data import NiftiMasker
 from nilearn.image import resample_to_img
 
 example_img = nib.load(os.path.join("movie_files", "sherlock_movie_s1.nii"))
-mask_img = nib.load("mask_img.nii.gz")
+mask_img = nib.load("sherlock_roi.nii.gz")
 mask_img = resample_to_img(mask_img, example_img, interpolation="nearest")
 masker = NiftiMasker(
     mask_img=mask_img,

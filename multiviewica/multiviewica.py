@@ -1,9 +1,9 @@
 import numpy as np
 import warnings
 from scipy.linalg import expm
+from multiviewica.reduce_data import reduce_data
 from multiviewica.permica import permica
 from multiviewica.groupica import groupica
-from reduce_data import reduce_data
 
 
 def multiviewica(
@@ -61,14 +61,14 @@ def multiviewica(
 
     Returns
     -------
-    K : np array of shape (n_groups, n_components, n_features)
+    P : np array of shape (n_groups, n_components, n_features)
         K is the projection matrix that projects data in reduced space
     W : np array of shape (n_groups, n_components, n_components)
         Estimated un-mixing matrices
     S : np array of shape (n_components, n_samples)
         Estimated source
     """
-    K, X = reduce_data(
+    P, X = reduce_data(
         X, n_components=n_components, dimension_reduction=dimension_reduction
     )
     # Initialization
@@ -91,7 +91,7 @@ def multiviewica(
     W, S = _multiview_ica_main(
         X, noise=noise, n_iter=max_iter, tol=tol, init=W, verbose=verbose
     )
-    return K, W, S
+    return P, W, S
 
 
 def _logcosh(X):

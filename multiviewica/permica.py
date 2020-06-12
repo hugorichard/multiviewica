@@ -1,7 +1,7 @@
 import numpy as np
 import scipy
 from picard import picard
-from reduce_data import reduce_data
+from multiviewica.reduce_data import reduce_data
 
 
 def permica(
@@ -42,14 +42,14 @@ def permica(
 
     Returns
     -------
-    K : np array of shape (n_groups, n_components, n_features)
+    P : np array of shape (n_groups, n_components, n_features)
         K is the projection matrix that projects data in reduced space
     W : np array of shape (n_groups, n_components, n_components)
         Estimated un-mixing matrices
     S : np array of shape (n_components, n_samples)
         Estimated source
     """
-    K, X = reduce_data(
+    P, X = reduce_data(
         X, n_components=n_components, dimension_reduction=dimension_reduction
     )
     n_pb, p, n = X.shape
@@ -71,7 +71,7 @@ def permica(
     orders, signs, S = _find_ordering(S)
     for i, (order, sign) in enumerate(zip(orders, signs)):
         W[i] = sign[:, None] * W[i][order, :]
-    return K, W, S
+    return P, W, S
 
 
 def _hungarian(M):

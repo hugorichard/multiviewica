@@ -42,7 +42,7 @@ for name, color, algo in algos:
             noises = rng.randn(m, k, n)
             X = np.array([A.dot(S_true) for A in A_list])
             X += [sigma * A.dot(N) for A, N in zip(A_list, noises)]
-            W, S = algo(X, tol=1e-4, max_iter=10000)
+            _, W, S = algo(X, tol=1e-4, max_iter=10000)
             dist = np.mean([amari_d(W[i], A_list[i]) for i in range(m)])
             dists.append(dist)
         dists = np.array(dists)

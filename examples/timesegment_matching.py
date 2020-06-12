@@ -1,15 +1,8 @@
 import numpy as np
 from sklearn.model_selection import KFold
 
-from multiviewica.permica import permica
-from multiviewica.groupica import groupica
-from multiviewica.multiviewica import multiviewica
-from multiviewica.reduce_data import (
-    reduce_data,
-    load_and_concat,
-    online_dot,
-    srm,
-)
+from multiviewica import permica, groupica, multiviewica
+from fmri_utils import load_and_concat
 from timesegment_matching_utils import time_segment_matching
 import os
 import matplotlib.pyplot as plt
@@ -36,34 +29,48 @@ paths = np.array(
 
 
 algos = [
-    ("MultiViewICA", multiviewica),
-    ("PCA+GroupICA", groupica),
-    ("PermICA", permica),
+    ("srm", "MultiViewICA", multiviewica),
+    ("pca", "PCA+GroupICA", groupica),
+    ("srm", "PermICA", permica),
 ]
+
 cv = KFold(n_splits=5, shuffle=False)
 res = []
 for i, (train_runs, test_runs) in enumerate(cv.split(np.arange(n_runs))):
     train_paths = paths[:, train_runs]
     test_paths = paths[:, test_runs]
-    A, X_train = reduce_data(train_paths, n_components=n_components)
     data_test = load_and_concat(test_paths)
+    data_train = load_and_concat(train_paths)
     res_ = []
-    for name, algo in algos:
-        if name == "PermICA" or name == "MultiViewICA":
-            # With PermICA and MultiViewICA we use SRM as preprocessing
-            A, X_train = srm(train_paths, n_components=n_components)
-            W, S = algo(X_train, tol=1e-5, max_iter=10000)
-            forward = [W[i].dot(A[i].T) for i in range(n_subjects)]
-            backward = [
-                A[i].dot(np.linalg.inv(W[i])) for i in range(n_subjects)
-            ]
-        elif name == "PCA+GroupICA":
-            # With PCA+GroupICA we use subject specific PCA
-            A, X_train = reduce_data(train_paths, n_components=n_components)
-            W, S = algo(X_train, tol=1e-5, max_iter=10000)
-            # We use double regression to compute forward operator
-            backward = online_dot(train_paths, np.linalg.pinv(S))
-            forward = [np.linalg.pinv(b) for b in backward]
+    for dimension_reduction, name, algo in algos:
+        K, W, S = algo(
+            data_train,
+            n_components=n_components,
+            dimension_reduction=dimension_reduction,
+            tol=1e-5,
+            max_iter=10000,
+        )
+        forward = [W[i].dot(K[i]) for i in range(n_subjects)]
+        backward = [np.linalg.pinv(forward[i]) for i in range(n_subjects)]
+        # Let us use dual regression for PCA+GroupICA to increase perf
+        if name == "PCA+GroupICA":
+            backward = [x.dot(np.linalg.pinv(S)) for x in data_train]
+            forward = np.linalg.pinv(backward)
+        # if name == "PermICA" or name == "MultiViewICA":
+        #     # With PermICA and MultiViewICA we use SRM as preprocessing
+        #     A, X_train = srm(train_paths, n_components=n_components)
+        #     W, S = algo(X_train, tol=1e-5, max_iter=10000)
+        #     forward = [W[i].dot(A[i].T) for i in range(n_subjects)]
+        #     backward = [
+        #         A[i].dot(np.linalg.inv(W[i])) for i in range(n_subjects)
+        #     ]
+        # elif name == "PCA+GroupICA":
+        #     # With PCA+GroupICA we use subject specific PCA
+        #     A, X_train = reduce_data(train_paths, n_components=n_components)
+        #     W, S = algo(X_train, tol=1e-5, max_iter=10000)
+        #     # We use double regression to compute forward operator
+        #     backward = online_dot(train_paths, np.linalg.pinv(S))
+        #     forward = [np.linalg.pinv(b) for b in backward]
         shared = np.array(
             [forward[i].dot(data_test[i]) for i in range(n_subjects)]
         )

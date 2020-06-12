@@ -1,6 +1,6 @@
 import numpy as np
 from picard import picard
-from reduce_data import reduce_data
+from multiviewica.reduce_data import reduce_data
 
 
 def groupica(
@@ -41,14 +41,14 @@ def groupica(
 
     Returns
     -------
-    K : np array of shape (n_groups, n_components, n_features)
-        K is the projection matrix that projects data in reduced space
+    P : np array of shape (n_groups, n_components, n_features)
+        P is the projection matrix that projects data in reduced space
     W : np array of shape (n_groups, n_components, n_components)
         Estimated un-mixing matrices
     S : np array of shape (n_components, n_samples)
         Estimated source
     """
-    K, X = reduce_data(
+    P, X = reduce_data(
         X, n_components=n_components, dimension_reduction=dimension_reduction
     )
     n_pb, p, n = X.shape
@@ -71,4 +71,4 @@ def groupica(
     scale = np.linalg.norm(S, axis=1)
     S = S / scale[:, None]
     W = np.array([S.dot(np.linalg.pinv(x)) for x in X])
-    return K, W, S
+    return P, W, S

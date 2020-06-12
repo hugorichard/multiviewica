@@ -2,16 +2,8 @@ import numpy as np
 
 import os
 
-from multiviewica.permica import permica
-from multiviewica.groupica import groupica
-from multiviewica import multiviewica
-from multiviewica.reduce_data import (
-    reduce_data,
-    load_and_concat,
-    online_dot,
-    srm,
-)
-from reconstruction_utils import get_sherlock_roi
+from multiviewica import permica, groupica, multiviewica
+from fmri_utils import load_and_concat
 import matplotlib.pyplot as plt
 from plot_utils import confidence_interval
 
@@ -33,45 +25,58 @@ paths = np.array(
 )
 
 algos = [
-    ("MultiViewICA", multiviewica),
-    ("PCA+GroupICA", groupica),
-    ("PermICA", permica),
+    ("srm", "MultiViewICA", multiviewica),
+    ("pca", "PCA+GroupICA", groupica),
+    ("srm", "PermICA", permica),
 ]
 
-sherlock_roi = get_sherlock_roi()
 res = []
 for seed in range(n_seeds):
     rng = np.random.RandomState(seed)
     shuffled_subs = np.arange(n_subjects)
     rng.shuffle(shuffled_subs)
     train_subs = shuffled_subs[: int(0.8 * n_subjects)]
-    test_subs = shuffled_subs[int(0.8 * n_subjects):]
+    test_subs = shuffled_subs[int(0.8 * n_subjects) :]
     shuffled_runs = np.arange(n_runs)
     rng.shuffle(shuffled_runs)
     train_runs = shuffled_runs[: int(0.8 * n_runs)]
-    test_runs = shuffled_runs[int(0.8 * n_runs):]
+    test_runs = shuffled_runs[int(0.8 * n_runs) :]
     train_paths = paths[np.arange(n_subjects), :][:, train_runs]
     test_paths = paths[train_subs, :][:, test_runs]
     validation_paths = paths[test_subs, :][:, test_runs]
+    data_train = load_and_concat(train_paths)
     data_test = load_and_concat(test_paths)
     data_val = load_and_concat(validation_paths)
     res_ = []
-    for name, algo in algos:
-        if name == "PermICA" or name == "MultiViewICA":
-            # With PermICA and MultiViewICA we use SRM as preprocessing
-            A, X_train = srm(train_paths, n_components=n_components)
-            W, S = algo(X_train, tol=1e-5, max_iter=10000)
-            forward = [W[i].dot(A[i].T) for i in range(n_subjects)]
-            backward = [
-                A[i].dot(np.linalg.inv(W[i])) for i in range(n_subjects)
-            ]
-        elif name == "PCA+GroupICA":
-            # With PCA+GroupICA we use subject specific PCA
-            A, X_train = reduce_data(train_paths, n_components=n_components)
-            W, S = algo(X_train, tol=1e-5, max_iter=10000)
-            # We use double regression to compute forward operator
-            backward = online_dot(train_paths, np.linalg.pinv(S))
-            forward = [np.linalg.pinv(b) for b in backward]
+    for dimension_reduction, name, algo in algos:
+        K, W, S = algo(
+            data_train,
+            n_components=n_components,
+            dimension_reduction=dimension_reduction,
+            tol=1e-5,
+            max_iter=10000,
+        )
+        forward = [W[i].dot(K[i]) for i in range(n_subjects)]
+        backward = [np.linalg.pinv(forward[i]) for i in range(n_subjects)]
+        # Let us use dual regression for PCA+GroupICA to increase perf
+        if name == "PCA+GroupICA":
+            backward = [x.dot(np.linalg.pinv(S)) for x in data_train]
+            forward = np.linalg.pinv(backward)
+        # if name == "PermICA" or name == "MultiViewICA":
+        #     # With PermICA and MultiViewICA we use SRM as preprocessing
+        #     A, X_train = srm(train_paths, n_components=n_components)
+        #     W, S = algo(X_train, tol=1e-5, max_iter=10000)
+        #     forward = [W[i].dot(A[i].T) for i in range(n_subjects)]
+        #     backward = [
+        #         A[i].dot(np.linalg.inv(W[i])) for i in range(n_subjects)
+        #     ]
+        # elif name == "PCA+GroupICA":
+        #     # With PCA+GroupICA we use subject specific PCA
+        #     A, X_train = reduce_data(train_paths, n_components=n_components)
+        #     W, S = algo(X_train, tol=1e-5, max_iter=10000)
+        #     # We use double regression to compute forward operator
+        #     backward = online_dot(train_paths, np.linalg.pinv(S))
+        #     forward = [np.linalg.pinv(b) for b in backward]
 
         shared_test = np.mean(
             [forward[i].dot(data_test[k]) for k, i in enumerate(train_subs)],
@@ -86,7 +91,7 @@ for seed in range(n_seeds):
             ],
             axis=0,
         )
-        mean_r2 = np.mean(var_e[sherlock_roi])
+        mean_r2 = np.mean(var_e)
         res_.append(mean_r2)
     res.append(res_)
 
