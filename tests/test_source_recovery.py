@@ -1,3 +1,6 @@
+# Authors: Hugo Richard, Pierre Ablin
+# License: BSD 3 clause
+
 import pytest
 import numpy as np
 from multiviewica import _hungarian, permica, groupica, multiviewica

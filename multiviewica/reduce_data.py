@@ -1,3 +1,6 @@
+# Authors: Hugo Richard, Pierre Ablin
+# License: BSD 3 clause
+
 import numpy as np
 from sklearn.utils.extmath import randomized_svd
 from fastsrm.identifiable_srm import IdentifiableFastSRM

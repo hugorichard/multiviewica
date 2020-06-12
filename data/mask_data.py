@@ -1,3 +1,6 @@
+# Authors: Hugo Richard, Pierre Ablin
+# License: BSD 3 clause
+
 import nibabel as nib
 from glob import glob
 import numpy as np

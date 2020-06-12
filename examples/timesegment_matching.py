@@ -1,3 +1,6 @@
+# Authors: Hugo Richard, Pierre Ablin
+# License: BSD 3 clause
+
 import numpy as np
 from sklearn.model_selection import KFold
 
