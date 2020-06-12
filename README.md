@@ -6,6 +6,10 @@ Clone the repository
 
 `git clone https://github.com/hugorichard/multiviewica.git`
 
+Move into the multiviewica directory
+
+``cd multiviewica``
+
 Install MultiView ICA
 
 `pip install -e .`
@@ -27,6 +31,10 @@ For the Experiments:
 ## Experiments
 
 ### Synthetic experiment
+
+Move into the multiviewica directory
+
+``cd multiviewica``
 
 Run the experiment on synthetic data
 
