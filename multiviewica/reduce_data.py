@@ -3,85 +3,90 @@ from sklearn.utils.extmath import randomized_svd
 from fastsrm.identifiable_srm import IdentifiableFastSRM
 
 
-def online_dot(paths, A):
+def reduce_data(X, n_components, dimension_reduction):
     """
-    Load and concatenate data of each subjects in paths
-    and returns its dot product with A
-    Parameters
-    ----------
-    paths: np array of shape (n_subjects, n_runs)
-        paths to data arrays
-    A: np array of shape n_timeframes, n_components
-    Returns
-    -------
-    res: np array of shape (n_subjects, n_voxels, n_components)
-    """
-    n_subjects, n_runs = paths.shape
-    res = []
-    for i in range(n_subjects):
-        X_i = np.concatenate(
-            [np.load(paths[i, j]) for j in range(n_runs)], axis=1
-        )
-        res.append(X_i.dot(A))
-    return np.array(res)
-
-
-def load_and_concat(paths):
-    """
-    Load data and concatenate temporally
-    Parameters
-    ----------
-    paths: np array of shape (n_subjects, n_runs)
-        paths to data arrays
-    Returns
-    -------
-    concat: np array of shape (n_subjects, n_voxels, n_timeframes)
-    """
-    n_subjects, n_runs = paths.shape
-    concat = []
-    for i in range(n_subjects):
-        X_i = np.concatenate(
-            [np.load(paths[i, j]) for j in range(n_runs)], axis=1
-        )
-        concat.append(X_i)
-    return np.array(concat)
-
-
-def reduce_data(paths, n_components):
-    """
-    Reduce and concatenate temporally an array of path
-    using subject specific PCA
+    Reduce the number of features in X to n_components
 
     Parameters
     ----------
-    paths: np array of shape (n_subjects, n_runs)
-        paths to data arrays
-    n_components: int
-        Number of components to keep in PCA
+    X : np array of shape (n_groups, n_features, n_samples)
+        Training vector, where n_groups is the number of groups,
+        n_samples is the number of samples and
+        n_components is the number of components.
+    n_components : int, optional
+        Number of components to extract.
+        If None, no dimension reduction is performed
+    dimension_reduction: str, optional
+        if srm: use srm to reduce the data
+        if pca: use group specific pca to reduce the data
 
     Returns
     -------
-    reduced: np array of shape (n_subjects, n_components, n_timeframes)
+    projection: np array of shape (n_groups, n_components, n_features)
+        the projection matrix that projects data in reduced space
+    reduced: np array of shape (n_groups, n_components, n_samples)
         Reduced data
-    basis: np array of shape (n_subjects, n_voxels, n_components)
-        Dimension reduction matrices
     """
-    n_subjects, n_runs = paths.shape
-    basis = []
+    if n_components is None:
+        return None, X
+    else:
+        if dimension_reduction == "pca":
+            return pca_reduce_data(X, n_components)
+        elif dimension_reduction == "srm":
+            return srm_reduce_data(X, n_components)
+        else:
+            ValueError(
+                "Dimension reduction %s is not implemented" % (dimension_reduction)
+            )
+
+
+def pca_reduce_data(X, n_components):
+    """
+    Reduce the number of features in X via group specific PCA
+    Parameters
+    ----------
+    X : np array of shape (n_groups, n_features, n_samples)
+        Training vector, where n_groups is the number of groups,
+        n_samples is the number of samples and
+        n_components is the number of components.
+    n_components : int, optional
+        Number of components to extract.
+        If None, no dimension reduction is performed
+    Returns
+    -------
+    projection: np array of shape (n_groups, n_components, n_features)
+        the projection matrix that projects data in reduced space
+    reduced: np array of shape (n_groups, n_components, n_samples)
+        Reduced data
+    """
+    n_groups, n_features, n_samples = X.shape
     reduced = []
-    for i in range(n_subjects):
-        X_i = np.concatenate(
-            [np.load(paths[i, j]) for j in range(n_runs)], axis=1
-        )
-        U_i, S_i, V_i = randomized_svd(X_i, n_components=n_components)
-        reduced.append(np.diag(S_i).dot(V_i))
-        basis.append(U_i)
+    basis = []
+    for i in range(n_groups):
+        U_i, S_i, V_i = randomized_svd(X[i], n_components=n_components)
+        reduced.append(S_i.reshape(-1, 1) * V_i)
+        basis.append(U_i.T)
     return np.array(basis), np.array(reduced)
 
 
-def srm(paths, n_components):
+def srm_reduce_data(X, n_components):
     """
-    Reduce data using FastSRM
+    Reduce the number of features in X via FastSRM
+    Parameters
+    ----------
+    X : np array of shape (n_groups, n_features, n_samples)
+        Training vector, where n_groups is the number of groups,
+        n_samples is the number of samples and
+        n_components is the number of components.
+    n_components : int, optional
+        Number of components to extract.
+        If None, no dimension reduction is performed
+    Returns
+    -------
+    projection: np array of shape (n_groups, n_components, n_features)
+        The projection matrix that projects data in reduced space
+    reduced: np array of shape (n_groups, n_components, n_samples)
+        Reduced data
     """
     srm = IdentifiableFastSRM(
         n_components=n_components,
@@ -89,7 +94,6 @@ def srm(paths, n_components):
         aggregate=None,
         identifiability="decorr",
     )
-    S = srm.fit_transform(paths)
-    S = np.array([np.concatenate(s, axis=1) for s in S])
-    W = np.array([w.T for w in srm.basis_list])
+    S = srm.fit_transform(X)
+    W = np.array(srm.basis_list)
     return W, S

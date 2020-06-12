@@ -3,10 +3,20 @@ import warnings
 from scipy.linalg import expm
 from multiviewica.permica import permica
 from multiviewica.groupica import groupica
+from reduce_data import reduce_data
 
 
-def multiviewica(X, noise=1.0, max_iter=1000, init='permica',
-                 random_state=None, tol=1e-3, verbose=False):
+def multiviewica(
+    X,
+    n_components=None,
+    dimension_reduction="pca",
+    noise=1.0,
+    max_iter=1000,
+    init="permica",
+    random_state=None,
+    tol=1e-3,
+    verbose=False,
+):
     """
     Performs MultiViewICA.
     It optimizes:
@@ -20,10 +30,16 @@ def multiviewica(X, noise=1.0, max_iter=1000, init='permica',
 
     Parameters
     ----------
-    X : np array of shape (n_groups, n_components, n_samples)
+    X : np array of shape (n_groups, n_features, n_samples)
         Training vector, where n_groups is the number of groups,
         n_samples is the number of samples and
         n_components is the number of components.
+    n_components : int, optional
+        Number of components to extract.
+        If None, no dimension reduction is performed
+    dimension_reduction: str, optional
+        if srm: use srm to reduce the data
+        if pca: use group specific pca to reduce the data
     noise : float, optional
         Gaussian noise level
     max_iter : int, optional
@@ -41,34 +57,41 @@ def multiviewica(X, noise=1.0, max_iter=1000, init='permica',
         A positive scalar giving the tolerance at which
         the un-mixing matrices are considered to have converged.
     verbose : bool, optional
-        Print informations
+        Print information
 
     Returns
     -------
+    K : np array of shape (n_groups, n_components, n_features)
+        K is the projection matrix that projects data in reduced space
     W : np array of shape (n_groups, n_components, n_components)
         Estimated un-mixing matrices
     S : np array of shape (n_components, n_samples)
         Estimated source
     """
+    K, X = reduce_data(
+        X, n_components=n_components, dimension_reduction=dimension_reduction
+    )
     # Initialization
     if type(init) is str:
-        if init not in ['permica', 'groupica']:
-            raise ValueError('init should either be permica or groupica')
-        if init == 'permica':
-            W, S = permica(X, max_iter=max_iter, random_state=random_state,
-                           tol=tol)
+        if init not in ["permica", "groupica"]:
+            raise ValueError("init should either be permica or groupica")
+        if init == "permica":
+            _, W, S = permica(
+                X, max_iter=max_iter, random_state=random_state, tol=tol
+            )
         else:
-            W, S = groupica(X, max_iter=max_iter, random_state=random_state,
-                            tol=tol)
+            _, W, S = groupica(
+                X, max_iter=max_iter, random_state=random_state, tol=tol
+            )
     else:
         if type(init) is not np.ndarray:
-            raise TypeError('init should be a numpy array')
+            raise TypeError("init should be a numpy array")
         W = init
     # Performs multiview ica
     W, S = _multiview_ica_main(
         X, noise=noise, n_iter=max_iter, tol=tol, init=W, verbose=verbose
     )
-    return W, S
+    return K, W, S
 
 
 def _logcosh(X):
