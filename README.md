@@ -1,5 +1,7 @@
 # MultiView ICA
 
+Code accompanying the paper MultiViewICA https://arxiv.org/pdf/2006.06635.pdf
+
 ## Install
 
 Clone the repository
