@@ -30,7 +30,8 @@ jobs:
           source activate testenv
           pwd
           ls
-          set -o pipefail && make html 2>&1 | tee log.txt
+          # set -o pipefail && make html 2>&1 | tee log.txt
+          set -o pipefail | tee log.txt
       - store_artifacts:
           path: build/html
       - save_cache:
