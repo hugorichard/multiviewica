@@ -23,6 +23,7 @@ jobs:
               chmod +x ~/miniconda.sh && ~/miniconda.sh -b
               export PATH="$HOME/miniconda3/bin:$PATH"
               conda create -n testenv #python pandas pytest scikit-learn joblib cython mkl -yq
+              source activate testenv
               pip install -r requirements.txt
             fi
             echo 'export PATH="$HOME/miniconda3/bin:$PATH"' >> $BASH_ENV
