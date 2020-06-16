@@ -49,7 +49,6 @@ jobs:
             mkdir pandoc
             tar xvzf pandoc-2.9.2.1-linux-amd64.tar.gz --strip-components 1 -C ./pandoc
             pandoc/bin/pandoc --from=markdown --to=rst --output=doc/README.rst README.md
-                        pandoc --from=markdown --to=rst --output=doc/README.rst README.md
             rm pandoc-2.9.2.1-linux-amd64.tar.gz
             rm -r pandoc
             cd doc
