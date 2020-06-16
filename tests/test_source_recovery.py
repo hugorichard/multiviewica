@@ -41,7 +41,7 @@ def test_ica(algo, dimension_reduction, init):
     sigma = 1e-4
     n, v, p, t = 3, 10, 5, 1000
     # Generate signals
-    rng = np.random.RandomState(None)
+    rng = np.random.RandomState(0)
     S_true = rng.laplace(size=(p, t))
     S_true = normalize(S_true)
     A_list = rng.randn(n, v, p)
