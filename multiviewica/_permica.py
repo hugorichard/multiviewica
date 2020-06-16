@@ -51,6 +51,11 @@ def permica(
         Estimated un-mixing matrices
     S : np array of shape (n_components, n_samples)
         Estimated source
+
+    See also
+    --------
+    groupica
+    multiviewica
     """
     P, X = reduce_data(
         X, n_components=n_components, dimension_reduction=dimension_reduction

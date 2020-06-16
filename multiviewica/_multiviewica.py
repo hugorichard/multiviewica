@@ -4,9 +4,9 @@
 import numpy as np
 import warnings
 from scipy.linalg import expm
-from multiviewica.reduce_data import reduce_data
-from multiviewica.permica import permica
-from multiviewica.groupica import groupica
+from .reduce_data import reduce_data
+from ._permica import permica
+from ._groupica import groupica
 
 
 def multiviewica(
@@ -70,6 +70,11 @@ def multiviewica(
         Estimated un-mixing matrices
     S : np array of shape (n_components, n_samples)
         Estimated source
+
+    See also
+    --------
+    groupica
+    permica
     """
     P, X = reduce_data(
         X, n_components=n_components, dimension_reduction=dimension_reduction
