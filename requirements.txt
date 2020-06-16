@@ -1,9 +1,12 @@
-numpy
-pandas
-cython
-scikit-learn
-joblib
+numpy>=1.12
+scikit-learn>=0.23
+mne >=0.20
 python-picard
+nibabel
+fastsrm
+nilearn
+scipy>=0.18.0
+matplotlib>=2.0.0
 pytest
 pytest-timeout
 pytest-cov
