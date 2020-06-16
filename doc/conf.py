@@ -15,10 +15,9 @@
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+
+
+import os
 import sphinx_bootstrap_theme
 import sphinx_gallery
 from distutils.version import LooseVersion
@@ -191,11 +190,12 @@ texinfo_documents = [
 ]
 
 sphinx_gallery_conf = {
-    'doc_module': ('multiviewica',),
-    'reference_url': dict(multiviewica=None),
+    'doc_module': 'multiviewica',
+    'backreferences_dir': os.path.join('generated'),
     'examples_dirs': '../examples',
     'gallery_dirs': 'auto_examples',
     'reference_url': {
+        'multiviewica': None,
         'numpy': 'http://docs.scipy.org/doc/numpy-1.9.1',
         'scipy': 'http://docs.scipy.org/doc/scipy-0.17.0/reference',
     }

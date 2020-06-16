@@ -3,7 +3,7 @@
 
 import numpy as np
 from picard import picard
-from multiviewica.reduce_data import reduce_data
+from .reduce_data import reduce_data
 
 
 def groupica(
@@ -50,6 +50,12 @@ def groupica(
         Estimated un-mixing matrices
     S : np array of shape (n_components, n_samples)
         Estimated source
+
+
+    See also
+    --------
+    permica
+    multiviewica
     """
     P, X = reduce_data(
         X, n_components=n_components, dimension_reduction=dimension_reduction
