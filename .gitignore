@@ -7,6 +7,8 @@ __pycache__
 /data
 /doc/_build
 /doc/README.rst
+/doc/generated
+/doc/auto_examples
 .coverage
 
 # IDE specific folders
