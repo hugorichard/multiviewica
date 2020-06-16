@@ -45,6 +45,7 @@ jobs:
             source activate testenv
             # conda install --no-update-deps nilearn sphinx numpydoc sphinx-gallery -c conda-forge -yq
             pip install -r doc/doc-requirements.txt
+            apt-get update && apt-get install -y pandoc
             pandoc --from=markdown --to=rst --output=doc/README.rst README.md
             cd doc
             sed -i '' 's/.\/figures/..\/figures/g' README.rst
