@@ -1,16 +1,16 @@
-*.pyc
-*.so
-*.pyd
-*~
-.#*
-*.lprof
-*.swp
-*.swo
-.DS_Store
-build
-*.pyproj
-.pydevproject
-.idea
+# Cache directories
+joblib
+.venv
+.pytest_cache
+__pycache__
+*.egg-info
+/data
+/doc/_build
+/doc/README.rst
+.coverage
 
-multiviewica.egg-info/
-.pytest_cache/
+# IDE specific folders
+.vscode
+
+.DS_Store
+coverage.xml

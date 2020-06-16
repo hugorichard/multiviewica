@@ -1,0 +1,10 @@
+numpy
+pandas
+cython
+scikit-learn
+joblib
+python-picard
+pytest
+pytest-timeout
+pytest-cov
+coverage

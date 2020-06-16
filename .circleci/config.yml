@@ -3,38 +3,65 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/python:3.7
+      - image: circleci/python:3.8.1-buster
 
     steps:
       - checkout
       - restore_cache:
-          key: v3-packages
-      - run: |
-          if
-            ls $HOME | grep miniconda3 -q
-          then
-            echo
-          else
-            wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
-            chmod +x ~/miniconda.sh && ~/miniconda.sh -b
-            export PATH="$HOME/miniconda3/bin:$PATH"
-            conda create -n testenv python pandas pytest scikit-learn joblib cython mkl -yq
-          fi
-      - run: echo 'export PATH="$HOME/miniconda3/bin:$PATH"' >> $BASH_ENV
-      - run: |
-          source activate testenv
-          # conda install --no-update-deps nilearn sphinx numpydoc sphinx-gallery -c conda-forge -yq
-          pip install .
-          set -o pipefail && pytest 2>&1 | tee log.txt
-      - run: |
-          source activate testenv
-          pwd
-          ls
-          # set -o pipefail && make html 2>&1 | tee log.txt
-          set -o pipefail | tee log.txt
+          keys:
+            - v3-packages
+            - pip-cache
+      - run:
+          name: Installation
+          command: |
+            if
+              ls $HOME | grep miniconda3 -q
+            then
+              echo
+            else
+              wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
+              chmod +x ~/miniconda.sh && ~/miniconda.sh -b
+              export PATH="$HOME/miniconda3/bin:$PATH"
+              pip install requirements.txt
+              # conda create -n testenv python pandas pytest scikit-learn joblib cython mkl -yq
+            fi
+            echo 'export PATH="$HOME/miniconda3/bin:$PATH"' >> $BASH_ENV
+      - run:
+          name: Check installation
+          command: |
+             source activate testenv
+             which python
+             python -c "import multiviewica"
+      - run:
+          name: Run tests
+          command: |
+            source activate testenv
+            pip install .
+            set -o pipefail && pytest 2>&1 | tee log.txt
+      - run:
+          name: Build doc
+          command: |
+            source activate testenv
+            # conda install --no-update-deps nilearn sphinx numpydoc sphinx-gallery -c conda-forge -yq
+            pip install doc/doc-requirements.txt
+            pandoc --from=markdown --to=rst --output=doc/README.rst README.md
+            cd doc
+            sed -i '' 's/.\/figures/..\/figures/g' README.rst
+            set -o pipefail && make html 2>&1 | tee log.txt
+            set -o pipefail | tee log.txt
+      # Save the outputs
       - store_artifacts:
-          path: build/html
+          path: doc/_build/html/
+          destination: dev
+      - persist_to_workspace:
+          root: doc/_build
+          paths:
+            - html
       - save_cache:
           key: v3-packages
           paths:
             - $HOME/miniconda3
+      - save_cache:
+          key: pip-cache
+          paths:
+            - ~/.cache/pip

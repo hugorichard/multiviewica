@@ -1,10 +1,18 @@
+"""
+==============================
+Experitments on synthetic data
+==============================
+
+
+"""
+
 # Authors: Hugo Richard, Pierre Ablin
 # License: BSD 3 clause
 
 import numpy as np
-from multiviewica import permica, groupica, multiviewica
 import matplotlib.pyplot as plt
 
+from multiviewica import permica, groupica, multiviewica
 
 # sigmas: data noise
 # m: number of subjects
@@ -60,7 +68,7 @@ for name, color, algo in algos:
     means = np.array(means)
     plots.append((highs, lows, means))
 
-plt.figure(figsize=(4, 2))
+fig = plt.figure(figsize=(5, 3))
 for i, (name, color, algo) in enumerate(algos):
     highs, lows, means = plots[i]
     plt.fill_between(
@@ -72,8 +80,10 @@ for i, (name, color, algo) in enumerate(algos):
 plt.legend()
 x_ = plt.xlabel(r"Data noise")
 y_ = plt.ylabel(r"Amari distance")
+fig.tight_layout()
 plt.savefig(
-    "figures/synthetic_experiment.png",
+    "../figures/synthetic_experiment.png",
     bbox_extra_artists=[x_, y_],
     bbox_inches="tight",
 )
+plt.show()
