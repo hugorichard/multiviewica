@@ -1,6 +1,6 @@
 """
 ==============================
-Experitments on synthetic data
+Experiments on synthetic data
 ==============================
 
 

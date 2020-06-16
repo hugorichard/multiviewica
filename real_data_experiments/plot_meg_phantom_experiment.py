@@ -1,6 +1,6 @@
 """
 ================================
-Experitments on MEG Phantom data
+Experiments on MEG Phantom data
 ================================
 
 
