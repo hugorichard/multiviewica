@@ -22,7 +22,7 @@ jobs:
               wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
               chmod +x ~/miniconda.sh && ~/miniconda.sh -b
               export PATH="$HOME/miniconda3/bin:$PATH"
-              conda create -n testenv #python pandas pytest scikit-learn joblib cython mkl -yq
+              conda create -n testenv python #pandas pytest scikit-learn joblib cython mkl -yq
               source activate testenv
               pip install -r requirements.txt
             fi
@@ -45,10 +45,15 @@ jobs:
             source activate testenv
             # conda install --no-update-deps nilearn sphinx numpydoc sphinx-gallery -c conda-forge -yq
             pip install -r doc/doc-requirements.txt
-            apt-get update && apt-get install -y pandoc
-            pandoc --from=markdown --to=rst --output=doc/README.rst README.md
+            wget https://github.com/jgm/pandoc/releases/download/2.9.2.1/pandoc-2.9.2.1-linux-amd64.tar.gz
+            mkdir pandoc
+            tar xvzf pandoc-2.9.2.1-linux-amd64.tar.gz --strip-components 1 -C ./pandoc
+            pandoc/bin/pandoc --from=markdown --to=rst --output=doc/README.rst README.md
+                        pandoc --from=markdown --to=rst --output=doc/README.rst README.md
+            rm pandoc-2.9.2.1-linux-amd64.tar.gz
+            rm -r pandoc
             cd doc
-            sed -i '' 's/.\/figures/..\/figures/g' README.rst
+            sed -i 's/.\/figures/..\/figures/g' README.rst
             set -o pipefail && make html 2>&1 | tee log.txt
             set -o pipefail | tee log.txt
       # Save the outputs
