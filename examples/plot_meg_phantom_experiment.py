@@ -1,13 +1,21 @@
+"""
+================================
+Experitments on MEG Phantom data
+================================
+
+
+"""
+
+
 # Authors: Hugo Richard, Pierre Ablin
 # License: BSD 3 clause
 
 import os.path as op
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.stats import kurtosis
 
 import mne
-from mne import find_events, fit_dipole
+from mne import find_events
 from mne.datasets.brainstorm import bst_phantom_elekta
 from mne.io import read_raw_fif
 
@@ -51,7 +59,7 @@ n_epochs = 1
 n_dipoles = 3
 X = np.array(
     [
-        np.hstack(epochs[str(i)].get_data()[1 : 1 + n_epochs])
+        np.hstack(epochs[str(i)].get_data()[1: 1 + n_epochs])
         for i in range(1, 1 + n_dipoles)
     ]
 )

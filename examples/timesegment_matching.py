@@ -1,3 +1,12 @@
+"""
+==============================
+Time-segment matching
+==============================
+
+
+"""
+
+
 # Authors: Hugo Richard, Pierre Ablin
 # License: BSD 3 clause
 

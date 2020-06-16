@@ -1,5 +1,7 @@
 # MultiView ICA
 
+[![CircleCI](https://circleci.com/gh/hugorichard/multiviewica.svg?style=svg)](https://circleci.com/gh/hugorichard/multiviewica)
+
 Code accompanying the paper MultiViewICA https://arxiv.org/pdf/2006.06635.pdf
 
 ## Install
