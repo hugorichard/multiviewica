@@ -72,7 +72,7 @@ author = u'multiviewica contributors'
 # built documents.
 #
 # The short X.Y version.
-from sparse_ho import __version__ as version  # noqa
+from multiviewica import __version__ as version  # noqa
 # The full version, including alpha/beta/rc tags.
 release = version
 
