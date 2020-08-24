@@ -75,9 +75,9 @@ Mask the data (Runtime ``15m27.104s``)
 
 #### Reconstructing BOLD signal of missing subjects
 
-Move into the examples directory
+Move into the `real_data_experiments` directory
 
-``cd multiviewica/examples``
+``cd multiviewica/real_data_experiments``
 
 Run the experiment on masked data (Runtime ``30m55.347s``)
 
@@ -89,9 +89,9 @@ This runs the experiment with ``n_components = 5`` and benchmark ``PCA + GroupIC
 
 #### Timesegment matching
 
-Move into the examples directory
+Move into the `real_data_experiment` directory
 
-``cd multiviewica/examples``
+``cd multiviewica/real_data_experiments``
 
 Run the experiment on masked data (Runtime ``17m39.520s``)
 
