@@ -177,7 +177,7 @@ def _multiview_ica_main(
             # Y_denoise is the estimate of the sources without Y_j
             Y_denoise = Y_avg - W_old.dot(X) / n_pb
             # Perform one ICA quasi-Newton step
-            basis_list[j], g_norm = _noisy_ica_step(
+            converged, basis_list[j], g_norm = _noisy_ica_step(
                 W_old, X, Y_denoise, noise, n_pb, ortho
             )
             # Update the average vector (estimate of the sources)
@@ -251,6 +251,13 @@ def _noisy_ica_step(
 ):
     """
     ICA minimization using quasi Newton method. Used in the inner loop.
+    Returns
+    -------
+    converged: bool
+        True if line search has converged
+    new_W: np array of shape (m, p, p)
+        New values for the basis
+    g_norm: float
     """
     p, n = X.shape
     loss0 = _loss_partial(W, X, Y_denoise, noise, n_pb)
@@ -298,7 +305,7 @@ def _noisy_ica_step(
             new_W = W - step * direction.dot(W)
         new_loss = _loss_partial(new_W, X, Y_denoise, noise, n_pb)
         if new_loss < loss0:
-            break
+            return True, new_W, g_norm
         else:
             step /= 2.0
-    return new_W, g_norm
+    return False, W, g_norm
