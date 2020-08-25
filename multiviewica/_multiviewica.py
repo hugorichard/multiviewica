@@ -7,6 +7,7 @@ from scipy.linalg import expm
 from .reduce_data import reduce_data
 from ._permica import permica
 from ._groupica import groupica
+from time import time
 
 
 def multiviewica(
@@ -97,7 +98,7 @@ def multiviewica(
         W = init
     # Performs multiview ica
     W, S = _multiview_ica_main(
-        X, noise=noise, n_iter=max_iter, tol=tol, init=W, verbose=verbose
+        X, noise=noise, n_iter=max_iter, tol=tol, init=W, verbose=verbose,
     )
     return P, W, S
 
@@ -116,7 +117,15 @@ def _multiview_ica_main(
     init=None,
     ortho=False,
     return_gradients=False,
+    timing=False,
 ):
+    tol_init = None
+    if tol > 0 and tol_init is None:
+        tol_init = tol
+
+    if tol == 0 and tol_init is None:
+        tol_init = 1e-6
+
     # Turn list into an array to make it compatible with the rest of the code
     if type(X_list) == list:
         X_list = np.array(X_list)
@@ -152,9 +161,12 @@ def _multiview_ica_main(
                     g_norms,
                 )
             )
-        if g_norms < tol:
+        if g_norms < tol_init:
             break
     # Start outer loop
+    if timing:
+        t0 = time()
+        timings = []
     g_norms = 0
     for i in range(n_iter):
         g_norms = 0
@@ -172,6 +184,16 @@ def _multiview_ica_main(
             Y_avg += np.dot(basis_list[j] - W_old, X) / n_pb
             g_norms = max(g_norm, g_norms)
         g_list.append(g_norms)
+        if timing:
+            timings.append(
+                (
+                    i,
+                    time() - t0,
+                    _loss_total(basis_list, X_list, Y_avg, noise),
+                    g_norms,
+                )
+            )
+
         if verbose:
             print(
                 "it %d, loss = %.4e, g=%.4e"
@@ -190,6 +212,9 @@ def _multiview_ica_main(
         )
     if return_gradients:
         return basis_list, Y_avg, g_list
+
+    if timing:
+        return basis_list, Y_avg, timings
     return basis_list, Y_avg
 
 
