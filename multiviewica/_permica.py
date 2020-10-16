@@ -90,8 +90,8 @@ def _hungarian(M):
 
 def _find_ordering(S_list, n_iter=10):
     n_pb, p, _ = S_list.shape
-    for s in S_list:
-        s /= np.linalg.norm(s, axis=1, keepdims=1)
+    for i in range(len(S_list)):
+        S_list[i] /= np.linalg.norm(S_list[i], axis=1, keepdims=1)
     S = S_list[0].copy()
     order = np.arange(p)[None, :] * np.ones(n_pb, dtype=int)[:, None]
     signs = np.ones_like(order)
