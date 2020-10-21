@@ -1,3 +1,5 @@
+![alt text](./summary_image.jpg?raw=true)
+
 # MultiView ICA
 
 [![CircleCI](https://circleci.com/gh/hugorichard/multiviewica.svg?style=svg)](https://circleci.com/gh/hugorichard/multiviewica)
