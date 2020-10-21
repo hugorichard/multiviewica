@@ -1,4 +1,4 @@
-![alt text](./summary_image.jpg?raw=true)
+![alt text](./summary_image.png)
 
 # MultiView ICA
 
