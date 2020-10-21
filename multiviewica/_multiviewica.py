@@ -140,18 +140,25 @@ def _multiview_ica_main(
     for i in range(n_iter):
         g_norms = 0
         # Start inner loop: decrease the loss w.r.t to each W_j
+        convergence = False
         for j in range(n_pb):
             X = X_list[j]
             W_old = basis_list[j].copy()
             # Y_denoise is the estimate of the sources without Y_j
             Y_denoise = Y_avg - W_old.dot(X) / n_pb
             # Perform one ICA quasi-Newton step
-            basis_list[j], g_norm = _noisy_ica_step(
+            converged, basis_list[j], g_norm = _noisy_ica_step(
                 W_old, X, Y_denoise, noise, n_pb, ortho, scale=True
             )
+            convergence = convergence or converged
             # Update the average vector (estimate of the sources)
             Y_avg += np.dot(basis_list[j] - W_old, X) / n_pb
             g_norms = max(g_norm, g_norms)
+
+        # If line search does not converge for any subject we ll stop there
+        if convergence is False:
+            break
+
         if verbose:
             print(
                 "it %d, loss = %.4e, g=%.4e"
@@ -170,6 +177,7 @@ def _multiview_ica_main(
     g_norms = 0
     for i in range(n_iter):
         g_norms = 0
+        convergence = False
         # Start inner loop: decrease the loss w.r.t to each W_j
         for j in range(n_pb):
             X = X_list[j]
@@ -177,12 +185,16 @@ def _multiview_ica_main(
             # Y_denoise is the estimate of the sources without Y_j
             Y_denoise = Y_avg - W_old.dot(X) / n_pb
             # Perform one ICA quasi-Newton step
-            basis_list[j], g_norm = _noisy_ica_step(
+            converged, basis_list[j], g_norm = _noisy_ica_step(
                 W_old, X, Y_denoise, noise, n_pb, ortho
             )
             # Update the average vector (estimate of the sources)
             Y_avg += np.dot(basis_list[j] - W_old, X) / n_pb
             g_norms = max(g_norm, g_norms)
+            convergence = converged or convergence
+        if convergence is False:
+            break
+
         g_list.append(g_norms)
         if timing:
             timings.append(
@@ -251,6 +263,13 @@ def _noisy_ica_step(
 ):
     """
     ICA minimization using quasi Newton method. Used in the inner loop.
+    Returns
+    -------
+    converged: bool
+        True if line search has converged
+    new_W: np array of shape (m, p, p)
+        New values for the basis
+    g_norm: float
     """
     p, n = X.shape
     loss0 = _loss_partial(W, X, Y_denoise, noise, n_pb)
@@ -298,7 +317,7 @@ def _noisy_ica_step(
             new_W = W - step * direction.dot(W)
         new_loss = _loss_partial(new_W, X, Y_denoise, noise, n_pb)
         if new_loss < loss0:
-            break
+            return True, new_W, g_norm
         else:
             step /= 2.0
-    return new_W, g_norm
+    return False, W, g_norm
