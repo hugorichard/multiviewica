@@ -6,5 +6,3 @@
 
 .. _sphx_glr_backreferences_{{ fullname }}:
 
-.. minigallery:: {{ fullname }}
-    :add-heading:
