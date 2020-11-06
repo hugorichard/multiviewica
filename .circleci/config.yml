@@ -1,7 +1,7 @@
 version: 2
 
 jobs:
-  build:
+  test:
     docker:
       - image: circleci/python:3.8.1-buster
 
@@ -49,6 +49,9 @@ jobs:
             mkdir pandoc
             tar xvzf pandoc-2.9.2.1-linux-amd64.tar.gz --strip-components 1 -C ./pandoc
             pandoc/bin/pandoc --from=markdown --to=rst --output=doc/README.rst README.md
+
+
+
             rm pandoc-2.9.2.1-linux-amd64.tar.gz
             rm -r pandoc
             cd doc
@@ -71,3 +74,35 @@ jobs:
           key: pip-cache
           paths:
             - ~/.cache/pip
+
+  docs-deploy:
+    docker:
+      - image: node:8.10.0
+    steps:
+      - checkout
+      - attach_workspace:
+          at: doc/_build
+      - run:
+          name: Install and configure dependencies
+          command: |
+            npm install -g --silent gh-pages@2.0.1
+            git config user.email "hugo.richard@inria.fr"
+            git config user.name "hrichard"
+      - add_ssh_keys:
+          fingerprints:
+            - "3c:a7:55:31:9b:d4:30:f6:4d:b8:99:61:09:c8:b1:6a"
+      - run:
+          name: Deploy docs to gh-pages branch
+          command: gh-pages --dotfiles --message "[skip ci] Updates" --dist doc/_build/html
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - test
+      - docs-deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
