@@ -1,0 +1,8 @@
+﻿multiviewica.multiviewica
+=========================
+
+.. currentmodule:: multiviewica
+
+.. autofunction:: multiviewica
+
+.. _sphx_glr_backreferences_multiviewica.multiviewica:

@@ -1,0 +1,8 @@
+﻿multiviewica.permica
+====================
+
+.. currentmodule:: multiviewica
+
+.. autofunction:: permica
+
+.. _sphx_glr_backreferences_multiviewica.permica:
