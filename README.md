@@ -4,6 +4,8 @@
 
 Code accompanying the paper MultiViewICA https://arxiv.org/pdf/2006.06635.pdf
 
+![alt text](./summary_image.png)
+
 ## Install
 
 Clone the repository
