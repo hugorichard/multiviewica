@@ -24,13 +24,13 @@ def multiviewica(
     """
     Performs MultiViewICA.
     It optimizes:
-    l(W) = mean_t [sum_k log(cosh(Y_avg(t)[k])) + sum_i l_i(X_i(t))]
+    :math:`l(W) = mean_t [sum_k log(cosh(Y_{avg}(t)[k])) + sum_i l_i(X_i(t))]`
     where
-    l_i(X_i(t)) = - log(|W_i|) + 1/(2 noise) ||W_iX_i(t) - Y_avg(t)||^2
-    X_i is the data of group i (ex: subject i)
-    W_i is the mixing matrix of subject i
+    :math:`l_i(X_i(t)) = - log(|W_i|) + 1/(2 noise) ||W_iX_i(t) - Y_{avg}(t)||^2`
+    :math:`X_i` is the data of group i (ex: subject i)
+    :math:`W_i` is the mixing matrix of subject i
     and
-    Y_avg = mean_i W_i X_i
+    :math:`Y_avg = mean_i W_i X_i`
 
     Parameters
     ----------
