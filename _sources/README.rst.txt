@@ -6,6 +6,8 @@ MultiView ICA
 Code accompanying the paper MultiViewICA
 https://arxiv.org/pdf/2006.06635.pdf
 
+Documentation: https://hugorichard.github.io/multiviewica/
+
 |Conceputal Figure|
 
 Install
