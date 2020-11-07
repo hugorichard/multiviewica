@@ -6,10 +6,7 @@ MultiView ICA
 Code accompanying the paper MultiViewICA
 https://arxiv.org/pdf/2006.06635.pdf
 
-.. figure:: https://github.com/hugorichard/multiviewica/blob/master/summary_image.png
-   :alt: alt text
-
-   alt text
+|Conceputal Figure|
 
 Install
 -------
@@ -51,9 +48,9 @@ Run the experiment on synthetic data
 ``python examples/synthetic_experiment.py``
 
 .. figure:: ../figures/synthetic_experiment.png
-   :alt: synthetic_experiment
+   :alt: Synthetic Experiment
 
-   synthetic_experiment
+   Synthetic Experiment
 
 In order to reproduce the figure in the paper, use (might take a long
 time):
@@ -98,9 +95,9 @@ Run the experiment on masked data (Runtime ``30m55.347s``)
 ``python reconstruction_experiment.py``
 
 .. figure:: ../figures/reconstruction.png
-   :alt: reconstruction_experiment
+   :alt: Reconstruction experiment
 
-   reconstruction_experiment
+   Reconstruction experiment
 
 This runs the experiment with ``n_components = 5`` and benchmark
 ``PCA + GroupICA``, ``PermICA`` and ``MultiView ICA`` with subject
@@ -119,9 +116,9 @@ Run the experiment on masked data (Runtime ``17m39.520s``)
 ``python timesegment_matching.py``
 
 .. figure:: ../figures/timesegment_matching.png
-   :alt: timesegment_matching
+   :alt: Timesegment matching
 
-   timesegment_matching
+   Timesegment matching
 
 This runs the experiment with ``n_components = 5`` and benchmark
 ``PCA + GroupICA``, ``PermICA`` and ``MultiView ICA`` with subject
@@ -130,3 +127,5 @@ specific PCA for dimension reduction in ``PCA + GroupICA`` and SRM for
 
 .. |CircleCI| image:: https://circleci.com/gh/hugorichard/multiviewica.svg?style=svg
    :target: https://circleci.com/gh/hugorichard/multiviewica
+.. |Conceputal Figure| image:: https://github.com/hugorichard/multiviewica/blob/master/summary_image.png
+   :target: https://github.com/hugorichard/multiviewica
