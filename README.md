@@ -4,6 +4,8 @@
 
 Code accompanying the paper MultiViewICA https://arxiv.org/pdf/2006.06635.pdf
 
+Documentation: https://hugorichard.github.io/multiviewica/
+
 [![Conceputal Figure](https://github.com/hugorichard/multiviewica/blob/master/summary_image.png)](https://github.com/hugorichard/multiviewica)
 
 
