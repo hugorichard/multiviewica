@@ -4,7 +4,8 @@
 
 Code accompanying the paper MultiViewICA https://arxiv.org/pdf/2006.06635.pdf
 
-![alt text](https://github.com/hugorichard/multiviewica/blob/master/summary_image.png)
+[![Conceputal Figure](https://github.com/hugorichard/multiviewica/blob/master/summary_image.png)](https://github.com/hugorichard/multiviewica)
+
 
 ## Install
 
@@ -46,7 +47,7 @@ Run the experiment on synthetic data
 
 `python examples/synthetic_experiment.py`
 
-![synthetic_experiment](./figures/synthetic_experiment.png)
+![Synthetic Experiment](./figures/synthetic_experiment.png)
 
 In order to reproduce the figure in the paper, use (might take a long time):
 ```
@@ -85,7 +86,7 @@ Run the experiment on masked data (Runtime ``30m55.347s``)
 
 ``python reconstruction_experiment.py``
 
-![reconstruction_experiment](./figures/reconstruction.png)
+![Reconstruction experiment](./figures/reconstruction.png)
 
 This runs the experiment with ``n_components = 5`` and benchmark ``PCA + GroupICA``,  ``PermICA`` and ``MultiView ICA`` with subject specific PCA for dimension reduction in ``PCA + GroupICA`` and SRM for ``PermICA`` and ``MultiView ICA``.
 
@@ -99,6 +100,6 @@ Run the experiment on masked data (Runtime ``17m39.520s``)
 
 ``python timesegment_matching.py``
 
-![timesegment_matching](./figures/timesegment_matching.png)
+![Timesegment matching](./figures/timesegment_matching.png)
 
 This runs the experiment with ``n_components = 5`` and benchmark ``PCA + GroupICA``,  ``PermICA`` and ``MultiView ICA`` with subject specific PCA for dimension reduction in ``PCA + GroupICA`` and SRM for ``PermICA`` and ``MultiView ICA``.
