@@ -6,7 +6,7 @@ MultiView ICA
 Code accompanying the paper MultiViewICA
 https://arxiv.org/pdf/2006.06635.pdf
 
-.. figure:: ./summary_image.png
+.. figure:: https://github.com/hugorichard/multiviewica/blob/master/summary_image.png
    :alt: alt text
 
    alt text
