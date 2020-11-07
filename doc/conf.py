@@ -40,6 +40,7 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx_gallery.gen_gallery',
     'numpydoc',
+    'sphinx.ext.githubpages',
 ]
 
 if LooseVersion(sphinx_gallery.__version__) < LooseVersion('0.2'):
