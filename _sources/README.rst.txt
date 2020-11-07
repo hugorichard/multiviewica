@@ -129,5 +129,5 @@ specific PCA for dimension reduction in ``PCA + GroupICA`` and SRM for
 
 .. |CircleCI| image:: https://circleci.com/gh/hugorichard/multiviewica.svg?style=svg
    :target: https://circleci.com/gh/hugorichard/multiviewica
-.. |Conceputal Figure| image:: https://github.com/hugorichard/multiviewica/blob/master/summary_image.png
+.. |Conceputal Figure| image:: ./summary_image.png
    :target: https://github.com/hugorichard/multiviewica
