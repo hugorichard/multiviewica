@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name="multiviewica",
     description="Multi-view ICA",
-    version=0.0.1,
+    version="0.0.1",
     keywords="",
     packages=find_packages(),
     python_requires=">=3",
