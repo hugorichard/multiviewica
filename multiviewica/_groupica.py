@@ -4,7 +4,7 @@
 import numpy as np
 from picard import picard
 from .reduce_data import reduce_data
-
+from sklearn.utils.extmath import randomized_svd
 
 def groupica(
     X,
@@ -71,11 +71,8 @@ def groupica(
     n_pb, p, n = X.shape
     X_concat = np.vstack(X)
     print("bla")
-    U, S, V = np.linalg.svd(X_concat, full_matrices=False)
+    U, S, V = randomized_svd(X_concat, n_components=p)
     print("bla")
-    U = U[:, :p]
-    S = S[:p]
-    V = V[:p]
     X_reduced = np.diag(S).dot(V)
     U = np.split(U, n_pb, axis=0)
     print("bla")
