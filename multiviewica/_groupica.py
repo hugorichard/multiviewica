@@ -69,9 +69,7 @@ def groupica(
         X, n_components=n_components, dimension_reduction=dimension_reduction
     )
     n_pb, p, n = X.shape
-    print("memory error ?")
     X_concat = np.vstack(X)
-    print("Nope")
     U, S, V = np.linalg.svd(X_concat, full_matrices=False)
     U = U[:, :p]
     S = S[:p]
@@ -89,5 +87,7 @@ def groupica(
     )
     scale = np.linalg.norm(S, axis=1)
     S = S / scale[:, None]
+    print("memory error ?")
     W = np.array([S.dot(np.linalg.pinv(x)) for x in X])
+    print("Nope")
     return P, W, S
