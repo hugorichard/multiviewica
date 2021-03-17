@@ -70,12 +70,9 @@ def groupica(
     )
     n_pb, p, n = X.shape
     X_concat = np.vstack(X)
-    print("bla")
     U, S, V = randomized_svd(X_concat, n_components=p)
-    print("bla")
     X_reduced = np.diag(S).dot(V)
     U = np.split(U, n_pb, axis=0)
-    print("bla")
     K, W, S = picard(
         X_reduced,
         ortho=ortho,
@@ -85,11 +82,7 @@ def groupica(
         tol=tol,
         random_state=random_state,
     )
-    print("bla")
     scale = np.linalg.norm(S, axis=1)
-    print("bla")
     S = S / scale[:, None]
-    print("bla")
     W = np.array([S.dot(np.linalg.pinv(x)) for x in X])
-    print("bla")
     return P, W, S
