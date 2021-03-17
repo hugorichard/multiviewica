@@ -69,7 +69,9 @@ def groupica(
         X, n_components=n_components, dimension_reduction=dimension_reduction
     )
     n_pb, p, n = X.shape
+    print("memory error ?")
     X_concat = np.vstack(X)
+    print("Nope")
     U, S, V = np.linalg.svd(X_concat, full_matrices=False)
     U = U[:, :p]
     S = S[:p]
