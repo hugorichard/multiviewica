@@ -11,12 +11,11 @@
     <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-rendered-html.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="multiviewica.multiviewica" href="multiviewica.multiviewica.html" />
@@ -98,7 +97,7 @@
 <h1>multiviewica.groupica<a class="headerlink" href="#multiviewica-groupica" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
 <dt id="multiviewica.groupica">
-<code class="sig-prename descclassname">multiviewica.</code><code class="sig-name descname">groupica</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">n_components</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dimension_reduction</span><span class="o">=</span><span class="default_value">'pca'</span></em>, <em class="sig-param"><span class="n">max_iter</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">random_state</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tol</span><span class="o">=</span><span class="default_value">1e-07</span></em><span class="sig-paren">)</span><a class="headerlink" href="#multiviewica.groupica" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">multiviewica.</span></code><code class="sig-name descname"><span class="pre">groupica</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimension_reduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-07</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ortho</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extended</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#multiviewica.groupica" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs PCA on concatenated data across groups (ex: subjects)
 and apply ICA on reduced data.</p>
 <dl class="field-list simple">
@@ -124,6 +123,12 @@ used by np.random.</p>
 </dd>
 <dt><strong>tol</strong><span class="classifier">float, optional</span></dt><dd><p>A positive scalar giving the tolerance at which
 the un-mixing matrices are considered to have converged.</p>
+</dd>
+<dt><strong>ortho: bool, optional</strong></dt><dd><p>If True, uses Picard-O. Otherwise, uses the standard Picard.</p>
+</dd>
+<dt><strong>extended: None or bool, optional</strong></dt><dd><p>If True, uses the extended algorithm to separate sub and
+super-Gaussian sources.
+By default, True if ortho == True, False otherwise.</p>
 </dd>
 </dl>
 </dd>
@@ -162,7 +167,7 @@ the un-mixing matrices are considered to have converged.</p>
     </p>
     <p>
         &copy; Copyright 2020-2020, multiviewica contributors.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.3.0.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2.<br/>
     </p>
   </div>
 </footer>
