@@ -13,6 +13,8 @@ def groupica(
     max_iter=1000,
     random_state=None,
     tol=1e-7,
+    ortho=False,
+    extended=False,
 ):
     """
     Performs PCA on concatenated data across groups (ex: subjects)
@@ -41,6 +43,12 @@ def groupica(
     tol : float, optional
         A positive scalar giving the tolerance at which
         the un-mixing matrices are considered to have converged.
+    ortho: bool, optional
+        If True, uses Picard-O. Otherwise, uses the standard Picard.
+    extended: None or bool, optional
+        If True, uses the extended algorithm to separate sub and
+        super-Gaussian sources.
+        By default, True if ortho == True, False otherwise.
 
     Returns
     -------
@@ -70,8 +78,8 @@ def groupica(
     U = np.split(U, n_pb, axis=0)
     K, W, S = picard(
         X_reduced,
-        ortho=False,
-        extended=False,
+        ortho=ortho,
+        extended=extended,
         centering=False,
         max_iter=max_iter,
         tol=tol,
