@@ -69,3 +69,50 @@ def test_ica(algo, dimension_reduction, init):
     err = np.mean(error(np.abs(S.dot(S_true.T))))
     assert dist < 0.01
     assert err < 0.01
+
+
+def test_supergaussian():
+    # Test with super Gaussian data
+    # should only work when density in the model is super-Gaussian
+    rng = np.random.RandomState(0)
+    sigma = 1e-4
+    n, p, t = 8, 2, 1000
+    S_true = rng.laplace(size=(p, t))
+    S_true = normalize(S_true)
+    A_list = rng.randn(n, p, p)
+    noises = rng.randn(n, p, t)
+    X = np.array([A.dot(S_true) for A in A_list])
+    X += [sigma * N for A, N in zip(A_list, noises)]
+
+    for fun in ["quadratic", "logcosh", "abs"]:
+        K, W, S = multiviewica(X, fun=fun)
+        dist = np.mean([amari_d(W[i], A_list[i]) for i in range(n)])
+        S = normalize(S)
+        err = np.mean(error(np.abs(S.dot(S_true.T))))
+        print(dist, err, fun)
+        if fun == "quadratic":
+            assert dist > 0.1
+            assert err > 0.1
+        else:
+            assert dist < 0.01
+            assert err < 0.01
+
+def test_subgaussian():
+    # Test with super Gaussian data
+    # should only work when density in the model is super-Gaussian
+    rng = np.random.RandomState(0)
+    sigma = 1e-5
+    n, p, t = 8, 2, 1000
+    S_true = rng.uniform(-1, 1, size=(p, t))
+    S_true = normalize(S_true)
+    A_list = rng.randn(n, p, p)
+    noises = rng.randn(n, p, t)
+    X = np.array([A.dot(S_true) for A in A_list])
+    X += [sigma * N for A, N in zip(A_list, noises)]
+
+    for fun in ["quadratic", "logcosh", "abs"]:
+        K, W, S = multiviewica(X, fun=fun)
+        dist = np.mean([amari_d(W[i], A_list[i]) for i in range(n)])
+        S = normalize(S)
+        err = np.mean(error(np.abs(S.dot(S_true.T))))
+        print(dist, err, fun)

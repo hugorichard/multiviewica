@@ -18,13 +18,14 @@ def multiviewica(
     max_iter=1000,
     init="permica",
     random_state=None,
+    fun="logcosh",
     tol=1e-3,
     verbose=False,
 ):
     """
     Performs MultiViewICA.
     It optimizes:
-    :math:`l(W) = mean_t [sum_k log(cosh(Y_{avg}(t)[k])) + sum_i l_i(X_i(t))]`
+    :math:`l(W) = mean_t [sum_k fun(Y_{avg}(t)[k]) + sum_i l_i(X_i(t))]`
     where
     :math:`l_i(X_i(t)) = - log(|W_i|) + 1/(2 noise) ||W_iX_i(t) - Y_{avg}(t)||^2`
     :math:`X_i` is the data of group i (ex: subject i)
@@ -57,6 +58,11 @@ def multiviewica(
         instance, random_state is the random number generator; If
         None, the random number generator is the RandomState instance
         used by np.random.
+    fun : "logcosh", "abs" or "quadratic", default "logcosh"
+        if "logcosh", :math:`fun(x) = logcosh(x)`
+        if "abs", :math:`fun(x) = |x|`
+        if "quadratic", :math:`fun(x) = x^4`
+
     tol : float, optional
         A positive scalar giving the tolerance at which
         the un-mixing matrices are considered to have converged.
@@ -96,9 +102,31 @@ def multiviewica(
         if type(init) is not np.ndarray:
             raise TypeError("init should be a numpy array")
         W = init
+
+    # Create function objects
+    if fun == "logcosh":
+        density = DerivableFunction(
+            _logcosh, np.tanh, lambda x: 1 - np.tanh(x) ** 2
+        )
+
+    if fun == "abs":
+        density = DerivableFunction(
+            np.abs, np.sign, lambda x: np.zeros_like(x)
+        )
+
+    if fun == "quadratic":
+        density = DerivableFunction(
+            lambda x: x ** 4, lambda x: 4 * x ** 3, lambda x: 12 * x ** 2
+        )
     # Performs multiview ica
     W, S = _multiview_ica_main(
-        X, noise=noise, n_iter=max_iter, tol=tol, init=W, verbose=verbose,
+        X,
+        density,
+        noise=noise,
+        n_iter=max_iter,
+        tol=tol,
+        init=W,
+        verbose=verbose,
     )
     return P, W, S
 
@@ -110,6 +138,7 @@ def _logcosh(X):
 
 def _multiview_ica_main(
     X_list,
+    density,
     noise=1.0,
     n_iter=1000,
     tol=1e-6,
@@ -148,7 +177,7 @@ def _multiview_ica_main(
             Y_denoise = Y_avg - W_old.dot(X) / n_pb
             # Perform one ICA quasi-Newton step
             converged, basis_list[j], g_norm = _noisy_ica_step(
-                W_old, X, Y_denoise, noise, n_pb, ortho, scale=True
+                W_old, X, Y_denoise, noise, n_pb, ortho, density, scale=True
             )
             convergence = convergence or converged
             # Update the average vector (estimate of the sources)
@@ -164,7 +193,7 @@ def _multiview_ica_main(
                 "it %d, loss = %.4e, g=%.4e"
                 % (
                     i + 1,
-                    _loss_total(basis_list, X_list, Y_avg, noise),
+                    _loss_total(basis_list, X_list, Y_avg, noise, density),
                     g_norms,
                 )
             )
@@ -186,7 +215,7 @@ def _multiview_ica_main(
             Y_denoise = Y_avg - W_old.dot(X) / n_pb
             # Perform one ICA quasi-Newton step
             converged, basis_list[j], g_norm = _noisy_ica_step(
-                W_old, X, Y_denoise, noise, n_pb, ortho
+                W_old, X, Y_denoise, noise, n_pb, ortho, density
             )
             # Update the average vector (estimate of the sources)
             Y_avg += np.dot(basis_list[j] - W_old, X) / n_pb
@@ -201,7 +230,7 @@ def _multiview_ica_main(
                 (
                     i,
                     time() - t0,
-                    _loss_total(basis_list, X_list, Y_avg, noise),
+                    _loss_total(basis_list, X_list, Y_avg, noise, density),
                     g_norms,
                 )
             )
@@ -211,7 +240,7 @@ def _multiview_ica_main(
                 "it %d, loss = %.4e, g=%.4e"
                 % (
                     i + 1,
-                    _loss_total(basis_list, X_list, Y_avg, noise),
+                    _loss_total(basis_list, X_list, Y_avg, noise, density),
                     g_norms,
                 )
             )
@@ -230,9 +259,9 @@ def _multiview_ica_main(
     return basis_list, Y_avg
 
 
-def _loss_total(basis_list, X_list, Y_avg, noise):
+def _loss_total(basis_list, X_list, Y_avg, noise, density):
     n_pb, p, _ = basis_list.shape
-    loss = np.mean(_logcosh(Y_avg)) * p
+    loss = np.mean(density.f(Y_avg)) * p
     for i, (W, X) in enumerate(zip(basis_list, X_list)):
         Y = W.dot(X)
         loss -= np.linalg.slogdet(W)[1]
@@ -240,11 +269,11 @@ def _loss_total(basis_list, X_list, Y_avg, noise):
     return loss
 
 
-def _loss_partial(W, X, Y_denoise, noise, n_pb):
+def _loss_partial(W, X, Y_denoise, noise, n_pb, density):
     p, _ = W.shape
     Y = np.dot(W, X)
     loss = -np.linalg.slogdet(W)[1]
-    loss += np.mean(_logcosh(Y / n_pb + Y_denoise)) * p
+    loss += np.mean(density.f(Y / n_pb + Y_denoise)) * p
     fact = (1 - 1 / n_pb) / (2 * noise)
     loss += fact * np.mean((Y - n_pb * Y_denoise / (n_pb - 1)) ** 2) * p
     return loss
@@ -257,6 +286,7 @@ def _noisy_ica_step(
     noise,
     n_pb,
     ortho,
+    density,
     lambda_min=0.001,
     n_ls_tries=50,
     scale=False,
@@ -272,12 +302,12 @@ def _noisy_ica_step(
     g_norm: float
     """
     p, n = X.shape
-    loss0 = _loss_partial(W, X, Y_denoise, noise, n_pb)
+    loss0 = _loss_partial(W, X, Y_denoise, noise, n_pb, density)
     Y = W.dot(X)
     Y_avg = Y / n_pb + Y_denoise
 
     # Compute relative gradient and Hessian
-    thM = np.tanh(Y_avg)
+    thM = density.fp(Y_avg)
     G = np.dot(thM, Y.T) / n / n_pb
     # print(G)
     const = 1 - 1 / n_pb
@@ -293,7 +323,7 @@ def _noisy_ica_step(
 
     # These are the terms H_{ijij} of the approximated hessian
     # (approximation H2 in Pierre's thesis)
-    h = np.dot((1 - thM ** 2) / n_pb ** 2 + const / noise, (Y ** 2).T,) / n
+    h = np.dot(density.fpp(Y_avg) / n_pb ** 2 + const / noise, (Y ** 2).T,) / n
 
     # Regularize
     discr = np.sqrt((h - h.T) ** 2 + 4.0)
@@ -315,9 +345,16 @@ def _noisy_ica_step(
             new_W = expm(-step * direction).dot(W)
         else:
             new_W = W - step * direction.dot(W)
-        new_loss = _loss_partial(new_W, X, Y_denoise, noise, n_pb)
+        new_loss = _loss_partial(new_W, X, Y_denoise, noise, n_pb, density)
         if new_loss < loss0:
             return True, new_W, g_norm
         else:
             step /= 2.0
     return False, W, g_norm
+
+
+class DerivableFunction:
+    def __init__(self, f, fp, fpp):
+        self.f = f
+        self.fp = fp
+        self.fpp = fpp
