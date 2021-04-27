@@ -58,10 +58,10 @@ def multiviewica(
         instance, random_state is the random number generator; If
         None, the random number generator is the RandomState instance
         used by np.random.
-    fun : "logcosh", "abs" or "quadratic", default "logcosh"
+    fun : "logcosh", "abs" or "quartic", default "logcosh"
         if "logcosh", :math:`fun(x) = logcosh(x)`
         if "abs", :math:`fun(x) = |x|`
-        if "quadratic", :math:`fun(x) = x^4`
+        if "quartic", :math:`fun(x) = x^4`
 
     tol : float, optional
         A positive scalar giving the tolerance at which
@@ -114,10 +114,11 @@ def multiviewica(
             np.abs, np.sign, lambda x: np.zeros_like(x)
         )
 
-    if fun == "quadratic":
+    if fun == "quartic":
         density = DerivableFunction(
             lambda x: x ** 4, lambda x: 4 * x ** 3, lambda x: 12 * x ** 2
         )
+
     # Performs multiview ica
     W, S = _multiview_ica_main(
         X,
