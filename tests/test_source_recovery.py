@@ -97,6 +97,7 @@ def test_supergaussian():
             assert dist < 0.01
             assert err < 0.01
 
+
 def test_subgaussian():
     # Test with super Gaussian data
     # should only work when density in the model is super-Gaussian
@@ -115,4 +116,9 @@ def test_subgaussian():
         dist = np.mean([amari_d(W[i], A_list[i]) for i in range(n)])
         S = normalize(S)
         err = np.mean(error(np.abs(S.dot(S_true.T))))
-        print(dist, err, fun)
+        if fun == "quadratic":
+            assert dist < 0.01
+            assert err < 0.01
+        else:
+            assert dist > 0.1
+            assert err > 0.1
