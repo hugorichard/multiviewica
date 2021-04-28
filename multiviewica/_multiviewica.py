@@ -119,6 +119,13 @@ def multiviewica(
             lambda x: x ** 4, lambda x: 4 * x ** 3, lambda x: 12 * x ** 2
         )
 
+    if fun == "x^2/2 - logcosh(x)":
+        density = DerivableFunction(
+            lambda x: x ** 2 / 2 - _logcosh(x),
+            lambda x: x - np.tanh(x),
+            lambda x: np.tanh(x) ** 2,
+        )
+
     # Performs multiview ica
     W, S = _multiview_ica_main(
         X,
