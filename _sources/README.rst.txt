@@ -127,6 +127,25 @@ This runs the experiment with ``n_components = 5`` and benchmark
 specific PCA for dimension reduction in ``PCA + GroupICA`` and SRM for
 ``PermICA`` and ``MultiView ICA``.
 
+Cite
+^^^^
+
+If you use this code in your project, please cite:
+
+::
+
+   @inproceedings{NEURIPS2020_de03beff,
+    author = {Richard, Hugo and Gresele, Luigi and Hyvarinen, Aapo and Thirion, Bertrand and Gramfort, Alexandre and Ablin, Pierre},
+    booktitle = {Advances in Neural Information Processing Systems},
+    editor = {H. Larochelle and M. Ranzato and R. Hadsell and M. F. Balcan and H. Lin},
+    pages = {19149--19162},
+    publisher = {Curran Associates, Inc.},
+    title = {Modeling Shared responses in Neuroimaging Studies through MultiView ICA},
+    url = {https://proceedings.neurips.cc/paper/2020/file/de03beffeed9da5f3639a621bcab5dd4-Paper.pdf},
+    volume = {33},
+    year = {2020}
+   }
+
 .. |CircleCI| image:: https://circleci.com/gh/hugorichard/multiviewica.svg?style=svg
    :target: https://circleci.com/gh/hugorichard/multiviewica
 .. |Conceputal Figure| image:: ../figures/summary_image.png

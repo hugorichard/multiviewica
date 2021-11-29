@@ -26,13 +26,27 @@ Experiments on synthetic data
 
 
 
-.. image:: /auto_examples/images/sphx_glr_plot_synthetic_experiment_001.png
-    :alt: plot synthetic experiment
-    :class: sphx-glr-single-img
+.. image-sg:: /auto_examples/images/sphx_glr_plot_synthetic_experiment_001.png
+   :alt: plot synthetic experiment
+   :srcset: /auto_examples/images/sphx_glr_plot_synthetic_experiment_001.png
+   :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    /home/circleci/miniconda3/envs/testenv/lib/python3.10/site-packages/sklearn/utils/extmath.py:368: FutureWarning: If 'random_state' is not supplied, the current default is to use 0 as a fixed seed. This will change to  None in version 1.2 leading to non-deterministic results that better reflect nature of the randomized_svd solver. If you want to silence this warning, set 'random_state' to an integer seed or to None explicitly depending if you want your code to be deterministic or not.
+      warnings.warn(
 
 
 
 
+
+
+|
 
 .. code-block:: default
 
@@ -122,7 +136,7 @@ Experiments on synthetic data
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  16.526 seconds)
+   **Total running time of the script:** ( 0 minutes  15.249 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_synthetic_experiment.py:

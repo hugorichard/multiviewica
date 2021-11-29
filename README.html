@@ -3,16 +3,17 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>MultiView ICA &#8212; multiviewica 0.1 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="_static/style.css" />
-    <link rel="stylesheet" type="text/css" href="_static/gallery.css" />
-    <link rel="stylesheet" type="text/css" href="_static/gallery-binder.css" />
-    <link rel="stylesheet" type="text/css" href="_static/gallery-dataframe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/gallery-rendered-html.css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
@@ -22,9 +23,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -91,14 +92,14 @@
   <div class="row">
     <div class="body col-md-12 content" role="main">
       
-  <div class="section" id="multiview-ica">
+  <section id="multiview-ica">
 <h1>MultiView ICA<a class="headerlink" href="#multiview-ica" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://circleci.com/gh/hugorichard/multiviewica"><img alt="CircleCI" src="https://circleci.com/gh/hugorichard/multiviewica.svg?style=svg" /></a></p>
 <p>Code accompanying the paper MultiViewICA
 <a class="reference external" href="https://arxiv.org/pdf/2006.06635.pdf">https://arxiv.org/pdf/2006.06635.pdf</a></p>
 <p>Documentation: <a class="reference external" href="https://hugorichard.github.io/multiviewica/">https://hugorichard.github.io/multiviewica/</a></p>
 <p><a class="reference external" href="https://github.com/hugorichard/multiviewica"><img alt="Conceputal Figure" src="_images/summary_image.png" /></a></p>
-<div class="section" id="install">
+<section id="install">
 <h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
 <p>Clone the repository</p>
 <p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/hugorichard/multiviewica.git</span></code></p>
@@ -106,27 +107,29 @@
 <p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">multiviewica</span></code></p>
 <p>Install MultiView ICA</p>
 <p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code></p>
-</div>
-<div class="section" id="requirements">
+</section>
+<section id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
 <p>For the core algorithms: * numpy &gt;= 1.16 * scipy &gt;= 1.12 *
 scikit-learn &gt;= 0.20 * python-picard &gt;= 0.4
 (<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">python-picard</span></code>)</p>
 <p>For the Experiments: * nibabel (&gt;=2.3.3) * mne (&gt;=0.20) * nilearn
 (&gt;=0.5) * fastsrm (<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">fastsrm</span></code>)</p>
-</div>
-<div class="section" id="experiments">
+</section>
+<section id="experiments">
 <h2>Experiments<a class="headerlink" href="#experiments" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="synthetic-experiment">
+<section id="synthetic-experiment">
 <h3>Synthetic experiment<a class="headerlink" href="#synthetic-experiment" title="Permalink to this headline">¶</a></h3>
 <p>Move into the multiviewica directory</p>
 <p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">multiviewica</span></code></p>
 <p>Run the experiment on synthetic data</p>
 <p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/synthetic_experiment.py</span></code></p>
-<div class="figure align-default" id="id1">
+<figure class="align-default" id="id1">
 <img alt="Synthetic Experiment" src="_images/synthetic_experiment.png" />
-<p class="caption"><span class="caption-text">Synthetic Experiment</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text">Synthetic Experiment</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>In order to reproduce the figure in the paper, use (might take a long
 time):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># sigmas: data noise</span>
@@ -138,10 +141,10 @@ time):</p>
 <span class="n">m</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">1000</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="experiments-on-fmri-data">
+</section>
+<section id="experiments-on-fmri-data">
 <h3>Experiments on fMRI data<a class="headerlink" href="#experiments-on-fmri-data" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="download-and-mask-sherlock-data">
+<section id="download-and-mask-sherlock-data">
 <h4>Download and mask Sherlock data<a class="headerlink" href="#download-and-mask-sherlock-data" title="Permalink to this headline">¶</a></h4>
 <p>Move into the data directory</p>
 <p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">multiviewica/data</span></code></p>
@@ -149,40 +152,61 @@ time):</p>
 <p><code class="docutils literal notranslate"><span class="pre">bash</span> <span class="pre">download_data.sh</span></code></p>
 <p>Mask the data (Runtime <code class="docutils literal notranslate"><span class="pre">15m27.104s</span></code>)</p>
 <p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">mask_data.py</span></code></p>
-</div>
-<div class="section" id="reconstructing-bold-signal-of-missing-subjects">
+</section>
+<section id="reconstructing-bold-signal-of-missing-subjects">
 <h4>Reconstructing BOLD signal of missing subjects<a class="headerlink" href="#reconstructing-bold-signal-of-missing-subjects" title="Permalink to this headline">¶</a></h4>
 <p>Move into the <code class="docutils literal notranslate"><span class="pre">real_data_experiments</span></code> directory</p>
 <p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">multiviewica/real_data_experiments</span></code></p>
 <p>Run the experiment on masked data (Runtime <code class="docutils literal notranslate"><span class="pre">30m55.347s</span></code>)</p>
 <p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">reconstruction_experiment.py</span></code></p>
-<div class="figure align-default" id="id2">
+<figure class="align-default" id="id2">
 <img alt="Reconstruction experiment" src="_images/reconstruction.png" />
-<p class="caption"><span class="caption-text">Reconstruction experiment</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text">Reconstruction experiment</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>This runs the experiment with <code class="docutils literal notranslate"><span class="pre">n_components</span> <span class="pre">=</span> <span class="pre">5</span></code> and benchmark
 <code class="docutils literal notranslate"><span class="pre">PCA</span> <span class="pre">+</span> <span class="pre">GroupICA</span></code>, <code class="docutils literal notranslate"><span class="pre">PermICA</span></code> and <code class="docutils literal notranslate"><span class="pre">MultiView</span> <span class="pre">ICA</span></code> with subject
 specific PCA for dimension reduction in <code class="docutils literal notranslate"><span class="pre">PCA</span> <span class="pre">+</span> <span class="pre">GroupICA</span></code> and SRM for
 <code class="docutils literal notranslate"><span class="pre">PermICA</span></code> and <code class="docutils literal notranslate"><span class="pre">MultiView</span> <span class="pre">ICA</span></code>.</p>
-</div>
-<div class="section" id="timesegment-matching">
+</section>
+<section id="timesegment-matching">
 <h4>Timesegment matching<a class="headerlink" href="#timesegment-matching" title="Permalink to this headline">¶</a></h4>
 <p>Move into the <code class="docutils literal notranslate"><span class="pre">real_data_experiment</span></code> directory</p>
 <p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">multiviewica/real_data_experiments</span></code></p>
 <p>Run the experiment on masked data (Runtime <code class="docutils literal notranslate"><span class="pre">17m39.520s</span></code>)</p>
 <p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">timesegment_matching.py</span></code></p>
-<div class="figure align-default" id="id3">
+<figure class="align-default" id="id3">
 <img alt="Timesegment matching" src="_images/timesegment_matching.png" />
-<p class="caption"><span class="caption-text">Timesegment matching</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text">Timesegment matching</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>This runs the experiment with <code class="docutils literal notranslate"><span class="pre">n_components</span> <span class="pre">=</span> <span class="pre">5</span></code> and benchmark
 <code class="docutils literal notranslate"><span class="pre">PCA</span> <span class="pre">+</span> <span class="pre">GroupICA</span></code>, <code class="docutils literal notranslate"><span class="pre">PermICA</span></code> and <code class="docutils literal notranslate"><span class="pre">MultiView</span> <span class="pre">ICA</span></code> with subject
 specific PCA for dimension reduction in <code class="docutils literal notranslate"><span class="pre">PCA</span> <span class="pre">+</span> <span class="pre">GroupICA</span></code> and SRM for
 <code class="docutils literal notranslate"><span class="pre">PermICA</span></code> and <code class="docutils literal notranslate"><span class="pre">MultiView</span> <span class="pre">ICA</span></code>.</p>
+</section>
+<section id="cite">
+<h4>Cite<a class="headerlink" href="#cite" title="Permalink to this headline">¶</a></h4>
+<p>If you use this code in your project, please cite:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@inproceedings</span><span class="p">{</span><span class="n">NEURIPS2020_de03beff</span><span class="p">,</span>
+ <span class="n">author</span> <span class="o">=</span> <span class="p">{</span><span class="n">Richard</span><span class="p">,</span> <span class="n">Hugo</span> <span class="ow">and</span> <span class="n">Gresele</span><span class="p">,</span> <span class="n">Luigi</span> <span class="ow">and</span> <span class="n">Hyvarinen</span><span class="p">,</span> <span class="n">Aapo</span> <span class="ow">and</span> <span class="n">Thirion</span><span class="p">,</span> <span class="n">Bertrand</span> <span class="ow">and</span> <span class="n">Gramfort</span><span class="p">,</span> <span class="n">Alexandre</span> <span class="ow">and</span> <span class="n">Ablin</span><span class="p">,</span> <span class="n">Pierre</span><span class="p">},</span>
+ <span class="n">booktitle</span> <span class="o">=</span> <span class="p">{</span><span class="n">Advances</span> <span class="ow">in</span> <span class="n">Neural</span> <span class="n">Information</span> <span class="n">Processing</span> <span class="n">Systems</span><span class="p">},</span>
+ <span class="n">editor</span> <span class="o">=</span> <span class="p">{</span><span class="n">H</span><span class="o">.</span> <span class="n">Larochelle</span> <span class="ow">and</span> <span class="n">M</span><span class="o">.</span> <span class="n">Ranzato</span> <span class="ow">and</span> <span class="n">R</span><span class="o">.</span> <span class="n">Hadsell</span> <span class="ow">and</span> <span class="n">M</span><span class="o">.</span> <span class="n">F</span><span class="o">.</span> <span class="n">Balcan</span> <span class="ow">and</span> <span class="n">H</span><span class="o">.</span> <span class="n">Lin</span><span class="p">},</span>
+ <span class="n">pages</span> <span class="o">=</span> <span class="p">{</span><span class="mi">19149</span><span class="o">--</span><span class="mi">19162</span><span class="p">},</span>
+ <span class="n">publisher</span> <span class="o">=</span> <span class="p">{</span><span class="n">Curran</span> <span class="n">Associates</span><span class="p">,</span> <span class="n">Inc</span><span class="o">.</span><span class="p">},</span>
+ <span class="n">title</span> <span class="o">=</span> <span class="p">{</span><span class="n">Modeling</span> <span class="n">Shared</span> <span class="n">responses</span> <span class="ow">in</span> <span class="n">Neuroimaging</span> <span class="n">Studies</span> <span class="n">through</span> <span class="n">MultiView</span> <span class="n">ICA</span><span class="p">},</span>
+ <span class="n">url</span> <span class="o">=</span> <span class="p">{</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">proceedings</span><span class="o">.</span><span class="n">neurips</span><span class="o">.</span><span class="n">cc</span><span class="o">/</span><span class="n">paper</span><span class="o">/</span><span class="mi">2020</span><span class="o">/</span><span class="n">file</span><span class="o">/</span><span class="n">de03beffeed9da5f3639a621bcab5dd4</span><span class="o">-</span><span class="n">Paper</span><span class="o">.</span><span class="n">pdf</span><span class="p">},</span>
+ <span class="n">volume</span> <span class="o">=</span> <span class="p">{</span><span class="mi">33</span><span class="p">},</span>
+ <span class="n">year</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2020</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
+</section>
 
 
     </div>
@@ -197,7 +221,7 @@ specific PCA for dimension reduction in <code class="docutils literal notranslat
     </p>
     <p>
         &copy; Copyright 2020-2020, multiviewica contributors.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.1.<br/>
     </p>
   </div>
 </footer>
