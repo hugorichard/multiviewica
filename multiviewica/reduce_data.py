@@ -95,7 +95,6 @@ def srm_reduce_data(X, n_components):
         n_components=n_components,
         tol=1e-10,
         aggregate=None,
-        identifiability="decorr",
     )
     S = np.array(srm.fit_transform([x for x in X]))
     W = np.array(srm.basis_list)
