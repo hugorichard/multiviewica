@@ -3,8 +3,11 @@ version: 2
 jobs:
   test:
     docker:
-      - image: circleci/python:3.8.1-buster
-
+      - image: circleci/python:3.8
+    environment:
+      - OMP_NUM_THREADS: 2
+      - MKL_NUM_THREADS: 2
+      - OPENBLAS_NUM_THREADS: 2
     steps:
       - checkout
       - restore_cache:
